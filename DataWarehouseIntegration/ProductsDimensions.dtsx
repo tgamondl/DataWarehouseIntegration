@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ProductsDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{7F770BC6-A3EB-413E-A3CC-3BB54B8D6C2D}">
+  DTS:VersionBuild="14"
+  DTS:VersionGUID="{AF8E89C0-BDF6-4ADA-84AB-657962D63F11}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -616,11 +616,12 @@ where [refTable].[crmBrandSeriesCode] = ?</property>
                           externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandSeriesCode]"
                           lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]" />
                         <inputColumn
-                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandSeriesName]"
-                          cachedDataType="nText"
-                          cachedName="BrandSeriesName"
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandSeriesName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandSeriesName_Converted"
                           externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesName]"
-                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]" />
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -797,12 +798,12 @@ where [refTable].[crmBrandSeriesCode] = ?</property>
               <paths>
                 <path
                   refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Data Conversion Output]"
-                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
                   name="Data Conversion Output"
                   startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
                 <path
                   refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup Match Output]"
-                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
                   startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]" />
                 <path
@@ -812,7 +813,7 @@ where [refTable].[crmBrandSeriesCode] = ?</property>
                   startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]" />
                 <path
                   refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OLE DB Source Output]"
-                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
                   name="OLE DB Source Output"
                   startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output]" />
                 <path
@@ -1500,18 +1501,19 @@ where [refTable].[crmBrandCode] = ?</property>
                           externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandCode]"
                           lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]" />
                         <inputColumn
-                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandName]"
-                          cachedDataType="nText"
-                          cachedName="BrandName"
-                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
-                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]" />
-                        <inputColumn
                           refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandAbbreviation]"
                           cachedDataType="wstr"
                           cachedLength="80"
                           cachedName="BrandAbbreviation"
                           externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandAbbreviation]"
                           lineageId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output].Columns[BrandAbbreviation]" />
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandName_Converted"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -1698,12 +1700,12 @@ where [refTable].[crmBrandCode] = ?</property>
                   startId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output]" />
                 <path
                   refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Data Conversion Output]"
-                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
                   name="Data Conversion Output"
                   startId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
                 <path
                   refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup Match Output]"
-                  endId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
                   startId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]" />
                 <path
@@ -1713,7 +1715,7 @@ where [refTable].[crmBrandCode] = ?</property>
                   startId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]" />
                 <path
                   refId="Package\Brands\Insert New Brands and Stage Changes.Paths[OLE DB Source Output]"
-                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
                   name="OLE DB Source Output"
                   startId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output]" />
                 <path
@@ -2365,11 +2367,12 @@ where [refTable].[crmGradeCode] = ?</property>
                           externalMetadataColumnId="Package\Grades\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmGradeCode]"
                           lineageId="Package\Grades\Insert New Grades and Stage Changes\Get Grades.Outputs[OLE DB Source Output].Columns[crmGradeCode]" />
                         <inputColumn
-                          refId="Package\Grades\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[GradeEquivalent]"
-                          cachedDataType="nText"
-                          cachedName="GradeEquivalent"
+                          refId="Package\Grades\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[GradeEquivalent_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="GradeEquivalent_Converted"
                           externalMetadataColumnId="Package\Grades\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[GradeEquivalent]"
-                          lineageId="Package\Grades\Insert New Grades and Stage Changes\Get Grades.Outputs[OLE DB Source Output].Columns[GradeEquivalent]" />
+                          lineageId="Package\Grades\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[GradeEquivalent_Converted]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -2546,12 +2549,12 @@ where [refTable].[crmGradeCode] = ?</property>
               <paths>
                 <path
                   refId="Package\Grades\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
-                  endId="Package\Grades\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  endId="Package\Grades\Insert New Grades and Stage Changes\Identify New Grades.Inputs[Lookup Input]"
                   name="Data Conversion Output"
                   startId="Package\Grades\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
                 <path
                   refId="Package\Grades\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
-                  endId="Package\Grades\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  endId="Package\Grades\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
                   startId="Package\Grades\Insert New Grades and Stage Changes\Identify New Grades.Outputs[Lookup Match Output]" />
                 <path
@@ -2561,7 +2564,7 @@ where [refTable].[crmGradeCode] = ?</property>
                   startId="Package\Grades\Insert New Grades and Stage Changes\Identify New Grades.Outputs[Lookup No Match Output]" />
                 <path
                   refId="Package\Grades\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
-                  endId="Package\Grades\Insert New Grades and Stage Changes\Identify New Grades.Inputs[Lookup Input]"
+                  endId="Package\Grades\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
                   name="OLE DB Source Output"
                   startId="Package\Grades\Insert New Grades and Stage Changes\Get Grades.Outputs[OLE DB Source Output]" />
                 <path
@@ -3217,11 +3220,12 @@ where [refTable].[crmItemTypeCode] = ?</property>
                           externalMetadataColumnId="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmItemTypeCode]"
                           lineageId="Package\Item Types\Insert New Grades and Stage Changes\Get Item Types.Outputs[OLE DB Source Output].Columns[crmItemTypeCode]" />
                         <inputColumn
-                          refId="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[ItemTypeName]"
-                          cachedDataType="nText"
-                          cachedName="ItemTypeName"
+                          refId="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[ItemTypeName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ItemTypeName_Converted"
                           externalMetadataColumnId="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[ItemTypeName]"
-                          lineageId="Package\Item Types\Insert New Grades and Stage Changes\Get Item Types.Outputs[OLE DB Source Output].Columns[ItemTypeName]" />
+                          lineageId="Package\Item Types\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[ItemTypeName_Converted]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -3398,12 +3402,12 @@ where [refTable].[crmItemTypeCode] = ?</property>
               <paths>
                 <path
                   refId="Package\Item Types\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
-                  endId="Package\Item Types\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  endId="Package\Item Types\Insert New Grades and Stage Changes\Identify New Item types.Inputs[Lookup Input]"
                   name="Data Conversion Output"
                   startId="Package\Item Types\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
                 <path
                   refId="Package\Item Types\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
-                  endId="Package\Item Types\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  endId="Package\Item Types\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
                   name="Lookup Match Output"
                   startId="Package\Item Types\Insert New Grades and Stage Changes\Identify New Item types.Outputs[Lookup Match Output]" />
                 <path
@@ -3413,7 +3417,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
                   startId="Package\Item Types\Insert New Grades and Stage Changes\Identify New Item types.Outputs[Lookup No Match Output]" />
                 <path
                   refId="Package\Item Types\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
-                  endId="Package\Item Types\Insert New Grades and Stage Changes\Identify New Item types.Inputs[Lookup Input]"
+                  endId="Package\Item Types\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
                   name="OLE DB Source Output"
                   startId="Package\Item Types\Insert New Grades and Stage Changes\Get Item Types.Outputs[OLE DB Source Output]" />
                 <path
@@ -3892,21 +3896,25 @@ where [refTable].[crmItemTypeCode] = ?</property>
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data"
           TopLeft="722,182" />
         <NodeLayout
+          Size="175,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands"
+          TopLeft="240,222" />
+        <NodeLayout
           Size="146,42"
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates"
           TopLeft="738,330" />
-        <NodeLayout
-          Size="171,42"
-          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records"
-          TopLeft="207,346" />
         <NodeLayout
           Size="154,42"
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries"
           TopLeft="149,80" />
         <NodeLayout
-          Size="175,42"
-          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands"
-          TopLeft="238,169" />
+          Size="171,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records"
+          TopLeft="208,362" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion"
+          TopLeft="207,151" />
         <EdgeLayout
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OutputRows]"
           TopLeft="812.75,224">
@@ -3932,135 +3940,143 @@ where [refTable].[crmItemTypeCode] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="327.5,264">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-34,98"
+              Start="0,0"
+              End="-34,90.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,45" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,45"
+                    Point2="0,49"
+                    Point3="-4,49" />
+                  <mssgle:LineSegment
+                    End="-30,49" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-30,49"
+                    Point2="-34,49"
+                    Point3="-34,53" />
+                  <mssgle:LineSegment
+                    End="-34,90.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-72.80638671875,54,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OLE DB Source Output]"
           TopLeft="226,122">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="99.5,47"
+              EndConnector="59,29"
               Start="0,0"
-              End="99.5,39.5">
+              End="59,21.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.5" />
+                    End="0,10.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,19.5"
-                    Point2="0,23.5"
-                    Point3="4,23.5" />
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="4,14.5" />
                   <mssgle:LineSegment
-                    End="95.5,23.5" />
+                    End="55,14.5" />
                   <mssgle:CubicBezierSegment
-                    Point1="95.5,23.5"
-                    Point2="99.5,23.5"
-                    Point3="99.5,27.5" />
+                    Point1="55,14.5"
+                    Point2="59,14.5"
+                    Point3="59,18.5" />
                   <mssgle:LineSegment
-                    End="99.5,39.5" />
+                    End="59,21.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup No Match Output]"
-          TopLeft="325.5,211">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-33,135"
-              Start="0,0"
-              End="-33,127.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,63.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,63.5"
-                    Point2="0,67.5"
-                    Point3="-4,67.5" />
-                  <mssgle:LineSegment
-                    End="-29,67.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-29,67.5"
-                    Point2="-33,67.5"
-                    Point3="-33,71.5" />
-                  <mssgle:LineSegment
-                    End="-33,127.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-72.30638671875,72.5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="156,42"
-          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion"
-          TopLeft="481,185" />
-        <EdgeLayout
-          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup Match Output]"
-          TopLeft="413,190">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="68,16"
-              Start="0,0"
-              End="60.5,16">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="30,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="30,0"
-                    Point2="34,0"
-                    Point3="34,4" />
-                  <mssgle:LineSegment
-                    End="34,12" />
-                  <mssgle:CubicBezierSegment
-                    Point1="34,12"
-                    Point2="34,16"
-                    Point3="38,16" />
-                  <mssgle:LineSegment
-                    End="60.5,16" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-14.19138671875,-17.609375,96.3827734375,11.609375"
-              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Data Conversion Output]"
-          TopLeft="637,204.5">
+          TopLeft="285,193">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="85,0"
+              EndConnector="42.5,29"
               Start="0,0"
-              End="77.5,0">
+              End="42.5,21.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="77.5,0" />
+                    End="0,10.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.5"
+                    Point2="0,14.5"
+                    Point3="4,14.5" />
+                  <mssgle:LineSegment
+                    End="38.5,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="38.5,14.5"
+                    Point2="42.5,14.5"
+                    Point3="42.5,18.5" />
+                  <mssgle:LineSegment
+                    End="42.5,21.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="415,243">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="307,-40"
+              Start="0,0"
+              End="299.5,-40">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="149.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="149.5,0"
+                    Point2="153.5,0"
+                    Point3="153.5,-4" />
+                  <mssgle:LineSegment
+                    End="153.5,-36" />
+                  <mssgle:CubicBezierSegment
+                    Point1="153.5,-36"
+                    Point2="153.5,-40"
+                    Point3="157.5,-40" />
+                  <mssgle:LineSegment
+                    End="299.5,-40" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="105.30861328125,1,96.3827734375,11.609375"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4129,195 +4145,33 @@ where [refTable].[crmItemTypeCode] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="146,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Stage updates"
+          TopLeft="738,330" />
+        <NodeLayout
           Size="131,42"
           Id="Package\Brands\Insert New Brands and Stage Changes\Get Brands"
-          TopLeft="149,80" />
-        <NodeLayout
-          Size="175,42"
-          Id="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands"
-          TopLeft="237,169" />
-        <EdgeLayout
-          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[OLE DB Source Output]"
-          TopLeft="214.5,122">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="110,47"
-              Start="0,0"
-              End="110,39.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,19.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,19.5"
-                    Point2="0,23.5"
-                    Point3="4,23.5" />
-                  <mssgle:LineSegment
-                    End="106,23.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="106,23.5"
-                    Point2="110,23.5"
-                    Point3="110,27.5" />
-                  <mssgle:LineSegment
-                    End="110,39.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="164,48" />
         <NodeLayout
           Size="171,42"
           Id="Package\Brands\Insert New Brands and Stage Changes\Insert New Records"
-          TopLeft="188,350" />
+          TopLeft="182,385" />
         <NodeLayout
-          Size="141,42"
-          Id="Package\Brands\Insert New Brands and Stage Changes\Copy Column"
-          TopLeft="216,250" />
-        <EdgeLayout
-          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup No Match Output]"
-          TopLeft="324.5,211">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-38,39"
-              Start="0,0"
-              End="-38,31.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,15.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,15.5"
-                    Point2="0,19.5"
-                    Point3="-4,19.5" />
-                  <mssgle:LineSegment
-                    End="-34,19.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-34,19.5"
-                    Point2="-38,19.5"
-                    Point3="-38,23.5" />
-                  <mssgle:LineSegment
-                    End="-38,31.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-74.80638671875,24.5,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Copy Column Output]"
-          TopLeft="286.5,292">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-13,58"
-              Start="0,0"
-              End="-13,50.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,25" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,25"
-                    Point2="0,29"
-                    Point3="-4,29" />
-                  <mssgle:LineSegment
-                    End="-9,29" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-9,29"
-                    Point2="-13,29"
-                    Point3="-13,33" />
-                  <mssgle:LineSegment
-                    End="-13,50.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="156,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Data Conversion"
+          TopLeft="159,108" />
         <NodeLayout
           Size="185,42"
           Id="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data"
           TopLeft="722,182" />
         <NodeLayout
-          Size="156,42"
-          Id="Package\Brands\Insert New Brands and Stage Changes\Data Conversion"
-          TopLeft="498,173" />
-        <EdgeLayout
-          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup Match Output]"
-          TopLeft="412,192">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="86,0"
-              Start="0,0"
-              End="78.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="78.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-8.94138671875,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Data Conversion Output]"
-          TopLeft="654,194">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="68,9"
-              Start="0,0"
-              End="60.5,9">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="30,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="30,0"
-                    Point2="34,0"
-                    Point3="34,4" />
-                  <mssgle:LineSegment
-                    End="34,5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="34,5"
-                    Point2="34,9"
-                    Point3="38,9" />
-                  <mssgle:LineSegment
-                    End="60.5,9" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="141,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Copy Column"
+          TopLeft="221,291" />
         <NodeLayout
-          Size="146,42"
-          Id="Package\Brands\Insert New Brands and Stage Changes\Stage updates"
-          TopLeft="738,330" />
+          Size="175,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands"
+          TopLeft="235,201" />
         <EdgeLayout
           Id="Package\Brands\Insert New Brands and Stage Changes.Paths[OutputRows]"
           TopLeft="812.75,224">
@@ -4340,6 +4194,180 @@ where [refTable].[crmItemTypeCode] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="322.5,243">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-31,48"
+              Start="0,0"
+              End="-31,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20"
+                    Point2="0,24"
+                    Point3="-4,24" />
+                  <mssgle:LineSegment
+                    End="-27,24" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-27,24"
+                    Point2="-31,24"
+                    Point3="-31,28" />
+                  <mssgle:LineSegment
+                    End="-31,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-71.30638671875,29,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="410,222">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="312,-19"
+              Start="0,0"
+              End="304.5,-19">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="152,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="152,0"
+                    Point2="156,0"
+                    Point3="156,-4" />
+                  <mssgle:LineSegment
+                    End="156,-15" />
+                  <mssgle:CubicBezierSegment
+                    Point1="156,-15"
+                    Point2="156,-19"
+                    Point3="160,-19" />
+                  <mssgle:LineSegment
+                    End="304.5,-19" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="107.80861328125,1,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="164,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-5,60"
+              Start="0,0"
+              End="-12.5,60">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-23.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23.5,0"
+                    Point2="-27.5,0"
+                    Point3="-27.5,4" />
+                  <mssgle:LineSegment
+                    End="-27.5,56" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-27.5,56"
+                    Point2="-27.5,60"
+                    Point3="-23.5,60" />
+                  <mssgle:LineSegment
+                    End="-12.5,60" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="237,150">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85.5,51"
+              Start="0,0"
+              End="85.5,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.5"
+                    Point2="0,25.5"
+                    Point3="4,25.5" />
+                  <mssgle:LineSegment
+                    End="81.5,25.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="81.5,25.5"
+                    Point2="85.5,25.5"
+                    Point3="85.5,29.5" />
+                  <mssgle:LineSegment
+                    End="85.5,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Copy Column Output]"
+          TopLeft="291.5,333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-24,52"
+              Start="0,0"
+              End="-24,44.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22"
+                    Point2="0,26"
+                    Point3="-4,26" />
+                  <mssgle:LineSegment
+                    End="-20,26" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20,26"
+                    Point2="-24,26"
+                    Point3="-24,30" />
+                  <mssgle:LineSegment
+                    End="-24,44.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4408,133 +4436,29 @@ where [refTable].[crmItemTypeCode] = ?</property>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="146,42"
-          Id="Package\Grades\Insert New Grades and Stage Changes\Stage updates"
-          TopLeft="738,330" />
-        <NodeLayout
           Size="185,42"
           Id="Package\Grades\Insert New Grades and Stage Changes\Identify Changed Data"
           TopLeft="722,182" />
         <NodeLayout
-          Size="171,42"
-          Id="Package\Grades\Insert New Grades and Stage Changes\Insert New Records"
-          TopLeft="207,346" />
-        <NodeLayout
-          Size="156,42"
-          Id="Package\Grades\Insert New Grades and Stage Changes\Data Conversion"
-          TopLeft="481,185" />
-        <NodeLayout
-          Size="131,42"
-          Id="Package\Grades\Insert New Grades and Stage Changes\Get Grades"
-          TopLeft="253,70" />
-        <NodeLayout
           Size="175,42"
           Id="Package\Grades\Insert New Grades and Stage Changes\Identify New Grades"
           TopLeft="224,190" />
-        <EdgeLayout
-          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
-          TopLeft="315,112">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,78"
-              Start="0,0"
-              End="0,70.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,70.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Lookup No Match Output]"
-          TopLeft="311.5,232">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-19,114"
-              Start="0,0"
-              End="-19,106.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,53" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,53"
-                    Point2="0,57"
-                    Point3="-4,57" />
-                  <mssgle:LineSegment
-                    End="-15,57" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-15,57"
-                    Point2="-19,57"
-                    Point3="-19,61" />
-                  <mssgle:LineSegment
-                    End="-19,106.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-65.30638671875,62,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
-          TopLeft="399,208.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="82,0"
-              Start="0,0"
-              End="74.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="74.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-10.94138671875,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
-          TopLeft="637,204.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="85,0"
-              Start="0,0"
-              End="77.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="77.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Grades\Insert New Grades and Stage Changes\Stage updates"
+          TopLeft="738,330" />
+        <NodeLayout
+          Size="131,42"
+          Id="Package\Grades\Insert New Grades and Stage Changes\Get Grades"
+          TopLeft="257,35" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Grades\Insert New Grades and Stage Changes\Insert New Records"
+          TopLeft="254,318" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Grades\Insert New Grades and Stage Changes\Data Conversion"
+          TopLeft="261,111" />
         <EdgeLayout
           Id="Package\Grades\Insert New Grades and Stage Changes.Paths[OutputRows]"
           TopLeft="812.75,224">
@@ -4557,6 +4481,146 @@ where [refTable].[crmItemTypeCode] = ?</property>
             <mssgm:EdgeLabel
               BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
               RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="311.5,232">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28,86"
+              Start="0,0"
+              End="28,78.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,39"
+                    Point2="0,43"
+                    Point3="4,43" />
+                  <mssgle:LineSegment
+                    End="24,43" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24,43"
+                    Point2="28,43"
+                    Point3="28,47" />
+                  <mssgle:LineSegment
+                    End="28,78.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-41.80638671875,48,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="399,211">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="323,-8"
+              Start="0,0"
+              End="315.5,-8">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="157.5,0"
+                    Point2="161.5,0"
+                    Point3="161.5,-4" />
+                  <mssgle:LineSegment
+                    End="161.5,-4" />
+                  <mssgle:CubicBezierSegment
+                    Point1="161.5,-4"
+                    Point2="161.5,-8"
+                    Point3="165.5,-8" />
+                  <mssgle:LineSegment
+                    End="315.5,-8" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="113.30861328125,1,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="322.5,77">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16.5,34"
+              Start="0,0"
+              End="16.5,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13"
+                    Point2="0,17"
+                    Point3="4,17" />
+                  <mssgle:LineSegment
+                    End="12.5,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.5,17"
+                    Point2="16.5,17"
+                    Point3="16.5,21" />
+                  <mssgle:LineSegment
+                    End="16.5,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Grades\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="339,153">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-27.5,37"
+              Start="0,0"
+              End="-27.5,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5"
+                    Point2="0,18.5"
+                    Point3="-4,18.5" />
+                  <mssgle:LineSegment
+                    End="-23.5,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23.5,18.5"
+                    Point2="-27.5,18.5"
+                    Point3="-27.5,22.5" />
+                  <mssgle:LineSegment
+                    End="-27.5,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -4639,7 +4703,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
         <NodeLayout
           Size="152,42"
           Id="Package\Item Types\Insert New Grades and Stage Changes\Get Item Types"
-          TopLeft="253,70" />
+          TopLeft="253,42" />
         <NodeLayout
           Size="171,42"
           Id="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records"
@@ -4647,41 +4711,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
         <NodeLayout
           Size="156,42"
           Id="Package\Item Types\Insert New Grades and Stage Changes\Data Conversion"
-          TopLeft="481,185" />
-        <EdgeLayout
-          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
-          TopLeft="329,112">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-8.5,78"
-              Start="0,0"
-              End="-8.5,70.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,35" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,35"
-                    Point2="0,39"
-                    Point3="-4,39" />
-                  <mssgle:LineSegment
-                    End="-4.5,39" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-4.5,39"
-                    Point2="-8.5,39"
-                    Point3="-8.5,43" />
-                  <mssgle:LineSegment
-                    End="-8.5,70.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          TopLeft="245,117" />
         <EdgeLayout
           Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[Lookup No Match Output]"
           TopLeft="320.5,232">
@@ -4719,52 +4749,6 @@ where [refTable].[crmItemTypeCode] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
-          TopLeft="417,208.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="64,0"
-              Start="0,0"
-              End="56.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="56.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-19.94138671875,5,96.3827734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
-          TopLeft="637,204.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="85,0"
-              Start="0,0"
-              End="77.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="77.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[OutputRows]"
           TopLeft="812.75,224">
           <EdgeLayout.Curve>
@@ -4785,6 +4769,86 @@ where [refTable].[crmItemTypeCode] = ?</property>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
               BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="326,84">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="321.75,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Item Types\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="417,211">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="305,-8"
+              Start="0,0"
+              End="297.5,-8">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="148.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="148.5,0"
+                    Point2="152.5,0"
+                    Point3="152.5,-4" />
+                  <mssgle:LineSegment
+                    End="152.5,-4" />
+                  <mssgle:CubicBezierSegment
+                    Point1="152.5,-4"
+                    Point2="152.5,-8"
+                    Point3="156.5,-8" />
+                  <mssgle:LineSegment
+                    End="297.5,-8" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="104.30861328125,1,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
