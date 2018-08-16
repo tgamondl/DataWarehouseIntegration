@@ -1,0 +1,2496 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/16/2018 12:37:31 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="PL-8V8Q1IU"
+  DTS:CreatorName="MATHUSEE\tomgamon"
+  DTS:DTSID="{4CB14C21-BA75-40CE-B0A9-16312FF99C5C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.3002.92"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="ProductsDimensions"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{FC32D452-F6EA-4D4B-AE53-C0F0106F1D10}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Brand Series"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{ec681717-4ba7-4834-9aa3-a2b568c814e8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Brand Series">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Brand Series\Clear staging tables"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{d16f899e-c966-4926-a555-b2105b2153ee}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Clear staging tables"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="truncate table [GlobalStaging].[BrandSeries]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Brand Series\Insert New BrandSeries and Stage Changes"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{0343abb9-c67d-4a8d-b552-42cedd2ccf2b}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert New BrandSeries and Stage Changes"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input].Columns[BrandSeriesName]"
+                          cachedDataType="nText"
+                          cachedName="BrandSeriesName"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]"
+                          name="BrandSeriesName_Converted"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get BrandSeries"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+       Capt_Code,
+       Capt_US
+FROM [dbo].[Custom_Captions] 
+WHERE 
+[Capt_Family] = N'prod_brandseries' 
+AND [Capt_FamilyType] LIKE '%Choices%'</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Connections[OleDbConnection]"
+                      connectionManagerID="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CRM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          length="80"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]"
+                          name="crmBrandSeriesCode"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]"
+                          dataType="nText"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]"
+                          name="BrandSeriesName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          name="Capt_Code" />
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          dataType="nText"
+                          name="Capt_US" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          name="Capt_Code" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          dataType="nText"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          name="Capt_US" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data"
+                  componentClassID="Microsoft.ConditionalSplit"
+                  contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+                  name="Identify Changed Data"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      description="Input to the Conditional Split Transformation"
+                      name="Conditional Split Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[Lkup_BrandSeriesName]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="Lkup_BrandSeriesName"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandSeriesName]" />
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[BrandSeriesName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandSeriesName_Converted"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[OutputRows]"
+                      description="Output 1 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="OutputRows"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">#{Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]} != #{Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandSeriesName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">BrandSeriesName_Converted != Lkup_BrandSeriesName</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">0</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Default Output]"
+                      description="Default Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      name="Conditional Split Default Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          name="IsDefaultOut">true</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output]"
+                      description="Error Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Conditional Split Error Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Identify New Brands"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+ 
+         crmBrandSeriesCode,
+
+         BrandSeriesName
+
+FROM 
+[Global].[BrandSeries]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+ 
+         crmBrandSeriesCode,
+
+         BrandSeriesName
+
+FROM 
+[Global].[BrandSeries]) [refTable]
+where [refTable].[crmBrandSeriesCode] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="crmBrandSeriesCode" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BrandSeriesName" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input].Columns[crmBrandSeriesCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandSeriesCode"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">crmBrandSeriesCode</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandSeriesName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="100"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandSeriesName]"
+                          name="Lkup_BrandSeriesName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">BrandSeriesName</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Insert New Records"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Global].[BrandSeries]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[crmBrandSeriesCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandSeriesCode"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandSeriesCode]"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]" />
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandSeriesName]"
+                          cachedDataType="nText"
+                          cachedName="BrandSeriesName"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesName]"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[BrandSeriesName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesId]"
+                          dataType="i4"
+                          name="BrandSeriesId" />
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesName]"
+                          dataType="wstr"
+                          length="100"
+                          name="BrandSeriesName" />
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandSeriesCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmBrandSeriesCode" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Stage updates"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[GlobalStaging].[BrandSeries]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[crmBrandSeriesCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandSeriesCode"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandSeriesCode]"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output].Columns[crmBrandSeriesCode]" />
+                        <inputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[BrandSeriesName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandSeriesName_Converted"
+                          externalMetadataColumnId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesName]"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandSeriesName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandSeriesCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmBrandSeriesCode" />
+                        <externalMetadataColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[BrandSeriesName]"
+                          dataType="wstr"
+                          length="50"
+                          name="BrandSeriesName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Data Conversion Output]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup Match Output]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup No Match Output]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                  name="Lookup No Match Output"
+                  startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]" />
+                <path
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OLE DB Source Output]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OutputRows]"
+                  endId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                  name="OutputRows"
+                  startId="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data.Outputs[OutputRows]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Brand Series\Update changed records"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{08535702-9d21-4103-91d5-f39a3ca73a89}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update changed records"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="update A&#xA;&#x9;set &#xA;&#x9;&#x9;A.BrandSeriesName = change.BrandSeriesName&#xA;from&#xA;&#x9;Global.BrandSeries as A&#xA;inner join&#xA;&#x9;GlobalStaging.BrandSeries as change&#xA;on&#xA;&#x9;A.crmBrandSeriesCode = change.crmBrandSeriesCode" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Brand Series.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{929a8b4d-4d25-43b3-bcaf-726accb70570}"
+          DTS:From="Package\Brand Series\Clear staging tables"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Brand Series\Insert New BrandSeries and Stage Changes" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Brand Series.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{442cdf78-2659-481b-a07a-cc60d4cd6127}"
+          DTS:From="Package\Brand Series\Insert New BrandSeries and Stage Changes"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Brand Series\Update changed records" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Brands"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{36D173F3-D6F5-4086-82ED-F7F242ED5D41}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Brands">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Brands\Clear staging tables"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{89401EA0-777D-4E30-915F-E9283DFE20A9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Clear staging tables"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="truncate table [GlobalStaging].[Brands]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Brands\Insert New Brands and Stage Changes"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{22C2983E-5D50-4B91-B6F2-79DBF4B4A977}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert New Brands and Stage Changes"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Copy Column"
+                  componentClassID="Microsoft.CopyMap"
+                  contactInfo="Copy Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Copies input columns to new columns in the transformation output. For example, create a copy of the 'address' column so that it can be cleaned by subsequent transformations and leave the original column in place for auditing."
+                  name="Copy Column">
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Inputs[Copy Column Input]"
+                      name="Copy Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Inputs[Copy Column Input].Columns[crmBrandCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandCode"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output]"
+                      name="Copy Column Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Inputs[Copy Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output].Columns[BrandAbbreviation]"
+                          dataType="wstr"
+                          length="80"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output].Columns[BrandAbbreviation]"
+                          name="BrandAbbreviation">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the column to copy."
+                              name="copyColumnId">#{Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]}</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input].Columns[BrandName]"
+                          cachedDataType="nText"
+                          cachedName="BrandName"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]"
+                          name="BrandName_Converted"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Brands"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+       Capt_Code,
+       Capt_US
+FROM [dbo].[Custom_Captions] 
+WHERE 
+[Capt_Family] = N'prod_brand' 
+AND [Capt_FamilyType] LIKE '%Choices%'</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Connections[OleDbConnection]"
+                      connectionManagerID="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CRM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          length="80"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]"
+                          name="crmBrandCode"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]"
+                          dataType="nText"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]"
+                          name="BrandName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          name="Capt_Code" />
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          dataType="nText"
+                          name="Capt_US" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          name="Capt_Code" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          dataType="nText"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          name="Capt_US" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data"
+                  componentClassID="Microsoft.ConditionalSplit"
+                  contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+                  name="Identify Changed Data"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      description="Input to the Conditional Split Transformation"
+                      name="Conditional Split Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[Lkup_BrandName]"
+                          cachedDataType="wstr"
+                          cachedLength="100"
+                          cachedName="Lkup_BrandName"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandName]" />
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[BrandName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandName_Converted"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[OutputRows]"
+                      description="Output 1 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="OutputRows"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">#{Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]} != #{Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">BrandName_Converted != Lkup_BrandName</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">0</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Default Output]"
+                      description="Default Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      name="Conditional Split Default Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          name="IsDefaultOut">true</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output]"
+                      description="Error Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Conditional Split Error Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Identify New Brands"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+         crmBrandCode,
+         BrandName
+FROM 
+[Global].[Brands]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT 
+         crmBrandCode,
+         BrandName
+FROM 
+[Global].[Brands]) [refTable]
+where [refTable].[crmBrandCode] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="crmBrandCode" dataType="DT_WSTR" length="80" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="BrandName" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input].Columns[crmBrandCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandCode"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">crmBrandCode</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="100"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output].Columns[Lkup_BrandName]"
+                          name="Lkup_BrandName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">BrandName</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Insert New Records"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Global].[Brands]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[crmBrandCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandCode"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandCode]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]" />
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandName]"
+                          cachedDataType="nText"
+                          cachedName="BrandName"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[BrandName]" />
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[BrandAbbreviation]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="BrandAbbreviation"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandAbbreviation]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output].Columns[BrandAbbreviation]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandId]"
+                          dataType="i4"
+                          name="BrandId" />
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
+                          dataType="wstr"
+                          length="100"
+                          name="BrandName" />
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[BrandAbbreviation]"
+                          dataType="wstr"
+                          length="80"
+                          name="BrandAbbreviation" />
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmBrandCode" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Stage updates"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[GlobalStaging].[Brands]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[crmBrandCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmBrandCode"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandCode]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output].Columns[crmBrandCode]" />
+                        <inputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[BrandName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="BrandName_Converted"
+                          externalMetadataColumnId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[BrandName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmBrandCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmBrandCode" />
+                        <externalMetadataColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[BrandName]"
+                          dataType="wstr"
+                          length="50"
+                          name="BrandName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Copy Column Output]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                  name="Copy Column Output"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Outputs[Copy Column Output]" />
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Data Conversion Output]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup Match Output]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup No Match Output]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Copy Column.Inputs[Copy Column Input]"
+                  name="Lookup No Match Output"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Outputs[Lookup No Match Output]" />
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[OLE DB Source Output]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Get Brands.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\Brands\Insert New Brands and Stage Changes.Paths[OutputRows]"
+                  endId="Package\Brands\Insert New Brands and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                  name="OutputRows"
+                  startId="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data.Outputs[OutputRows]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Brands\Update changed records"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D1581A23-117D-421B-9D7A-A350E4AFAB35}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update changed records"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="update A&#xA;&#x9;set &#xA;&#x9;&#x9;A.BrandName = change.BrandName&#xA;from&#xA;&#x9;Global.Brands as A&#xA;inner join&#xA;&#x9;GlobalStaging.Brands as change&#xA;on&#xA;&#x9;A.crmBrandCode = change.crmBrandCode" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Brands.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{14E0C23A-6C00-4AA2-A6A7-FFC92696B5B3}"
+          DTS:From="Package\Brands\Clear staging tables"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Brands\Insert New Brands and Stage Changes" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Brands.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{E69829AA-DB1B-4663-88AB-6989712C8FC8}"
+          DTS:From="Package\Brands\Insert New Brands and Stage Changes"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Brands\Update changed records" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1984E623-46DE-4AB7-9E9A-E9E54D9B61FE}"
+      DTS:From="Package\Brands"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Brand Series" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="173,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes"
+          TopLeft="24,89" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Brands\Clear staging tables"
+          TopLeft="28,11" />
+        <EdgeLayout
+          Id="Package\Brands.PrecedenceConstraints[Constraint]"
+          TopLeft="112.25,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36"
+              Start="0,0"
+              End="0,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="194,42"
+          Id="Package\Brands\Update changed records"
+          TopLeft="28,173" />
+        <EdgeLayout
+          Id="Package\Brands.PrecedenceConstraints[Constraint 1]"
+          TopLeft="110.5,131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14.5,42"
+              Start="0,0"
+              End="14.5,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17"
+                    Point2="0,21"
+                    Point3="4,21" />
+                  <mssgle:LineSegment
+                    End="10.5,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.5,21"
+                    Point2="14.5,21"
+                    Point3="14.5,25" />
+                  <mssgle:LineSegment
+                    End="14.5,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="263,290"
+          Size="263,333"
+          Id="Package\Brands"
+          TopLeft="61,60" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Brand Series\Clear staging tables"
+          TopLeft="28,11" />
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes"
+          TopLeft="40,89" />
+        <NodeLayout
+          Size="194,42"
+          Id="Package\Brand Series\Update changed records"
+          TopLeft="28,173" />
+        <EdgeLayout
+          Id="Package\Brand Series.PrecedenceConstraints[Constraint]"
+          TopLeft="114,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.5,36"
+              Start="0,0"
+              End="26.5,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="22.5,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5,18"
+                    Point2="26.5,18"
+                    Point3="26.5,22" />
+                  <mssgle:LineSegment
+                    End="26.5,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brand Series.PrecedenceConstraints[Constraint 1]"
+          TopLeft="140.5,131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.5,42"
+              Start="0,0"
+              End="-15.5,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17"
+                    Point2="0,21"
+                    Point3="-4,21" />
+                  <mssgle:LineSegment
+                    End="-11.5,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.5,21"
+                    Point2="-15.5,21"
+                    Point3="-15.5,25" />
+                  <mssgle:LineSegment
+                    End="-15.5,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="257,290"
+          Size="257,333"
+          Id="Package\Brand Series"
+          TopLeft="417,63" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="324,228">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93,0"
+              Start="0,0"
+              End="85.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="85.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Brands\Insert New Brands and Stage Changes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="131,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Get Brands"
+          TopLeft="149,80" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands"
+          TopLeft="237,169" />
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="214.5,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="110,47"
+              Start="0,0"
+              End="110,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="4,23.5" />
+                  <mssgle:LineSegment
+                    End="106,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="106,23.5"
+                    Point2="110,23.5"
+                    Point3="110,27.5" />
+                  <mssgle:LineSegment
+                    End="110,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Insert New Records"
+          TopLeft="188,350" />
+        <NodeLayout
+          Size="141,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Copy Column"
+          TopLeft="216,250" />
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="324.5,211">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-38,39"
+              Start="0,0"
+              End="-38,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="-4,19.5" />
+                  <mssgle:LineSegment
+                    End="-34,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-34,19.5"
+                    Point2="-38,19.5"
+                    Point3="-38,23.5" />
+                  <mssgle:LineSegment
+                    End="-38,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-74.80638671875,24.5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Copy Column Output]"
+          TopLeft="286.5,292">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-13,58"
+              Start="0,0"
+              End="-13,50.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,25"
+                    Point2="0,29"
+                    Point3="-4,29" />
+                  <mssgle:LineSegment
+                    End="-9,29" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-9,29"
+                    Point2="-13,29"
+                    Point3="-13,33" />
+                  <mssgle:LineSegment
+                    End="-13,50.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Identify Changed Data"
+          TopLeft="722,182" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Data Conversion"
+          TopLeft="498,173" />
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="412,192">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="86,0"
+              Start="0,0"
+              End="78.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="78.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8.94138671875,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="654,194">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68,9"
+              Start="0,0"
+              End="60.5,9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="30,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30,0"
+                    Point2="34,0"
+                    Point3="34,4" />
+                  <mssgle:LineSegment
+                    End="34,5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34,5"
+                    Point2="34,9"
+                    Point3="38,9" />
+                  <mssgle:LineSegment
+                    End="60.5,9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Brands\Insert New Brands and Stage Changes\Stage updates"
+          TopLeft="738,330" />
+        <EdgeLayout
+          Id="Package\Brands\Insert New Brands and Stage Changes.Paths[OutputRows]"
+          TopLeft="812.75,224">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106"
+              Start="0,0"
+              End="0,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brands\Insert New Brands and Stage Changes\Get Brands">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brands\Insert New Brands and Stage Changes\Identify New Brands">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brands\Insert New Brands and Stage Changes\Insert New Records">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brands\Insert New Brands and Stage Changes\Stage updates">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Brand Series\Insert New BrandSeries and Stage Changes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify Changed Data"
+          TopLeft="722,182" />
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates"
+          TopLeft="738,330" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records"
+          TopLeft="207,346" />
+        <NodeLayout
+          Size="154,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries"
+          TopLeft="149,80" />
+        <NodeLayout
+          Size="175,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands"
+          TopLeft="238,169" />
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OutputRows]"
+          TopLeft="812.75,224">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106"
+              Start="0,0"
+              End="0,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="226,122">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99.5,47"
+              Start="0,0"
+              End="99.5,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.5"
+                    Point2="0,23.5"
+                    Point3="4,23.5" />
+                  <mssgle:LineSegment
+                    End="95.5,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="95.5,23.5"
+                    Point2="99.5,23.5"
+                    Point3="99.5,27.5" />
+                  <mssgle:LineSegment
+                    End="99.5,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="325.5,211">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-33,135"
+              Start="0,0"
+              End="-33,127.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,63.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,63.5"
+                    Point2="0,67.5"
+                    Point3="-4,67.5" />
+                  <mssgle:LineSegment
+                    End="-29,67.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-29,67.5"
+                    Point2="-33,67.5"
+                    Point3="-33,71.5" />
+                  <mssgle:LineSegment
+                    End="-33,127.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-72.30638671875,72.5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes\Data Conversion"
+          TopLeft="481,185" />
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="413,190">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68,16"
+              Start="0,0"
+              End="60.5,16">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="30,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="30,0"
+                    Point2="34,0"
+                    Point3="34,4" />
+                  <mssgle:LineSegment
+                    End="34,12" />
+                  <mssgle:CubicBezierSegment
+                    Point1="34,12"
+                    Point2="34,16"
+                    Point3="38,16" />
+                  <mssgle:LineSegment
+                    End="60.5,16" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-14.19138671875,-17.609375,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Brand Series\Insert New BrandSeries and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="637,204.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85,0"
+              Start="0,0"
+              End="77.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="77.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brand Series\Insert New BrandSeries and Stage Changes\Stage updates">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brand Series\Insert New BrandSeries and Stage Changes\Insert New Records">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brand Series\Insert New BrandSeries and Stage Changes\Get BrandSeries">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Brand Series\Insert New BrandSeries and Stage Changes\Identify New Brands">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
