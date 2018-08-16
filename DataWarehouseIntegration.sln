@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "DataWarehouseIntegration", "DataWarehouseIntegration\DataWarehouseIntegration.dtproj", "{DC906243-374F-4B76-9271-9972D578ADCC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC906243-374F-4B76-9271-9972D578ADCC}.Development|Default.ActiveCfg = Development
+		{DC906243-374F-4B76-9271-9972D578ADCC}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EB9BE4C-2BD3-4D8D-9727-6AF8C79F6638}
+	EndGlobalSection
+EndGlobal
