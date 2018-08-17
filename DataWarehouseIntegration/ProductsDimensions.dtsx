@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ProductsDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="14"
-  DTS:VersionGUID="{AF8E89C0-BDF6-4ADA-84AB-657962D63F11}">
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{AB50A5E7-4B25-4A39-B526-83CEEEFDC850}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -3466,6 +3466,865 @@ where [refTable].[crmItemTypeCode] = ?</property>
           DTS:To="Package\Item Types\Update changed records" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Level Names"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{0c7b9a12-7145-4b22-98cc-5beb5e256bb3}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Level Names">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Level Names\Clear staging tables"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{07aa6b36-12f1-4cce-a27b-688b8ca8a81b}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Clear staging tables"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="truncate table [GlobalStaging].[LevelNames]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Level Names\Insert New Grades and Stage Changes"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{6383b618-eb68-45f2-818e-fcd79f595251}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert New Grades and Stage Changes"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion"
+                  componentClassID="Microsoft.DataConvert"
+                  contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Data Conversion"
+                  name="Data Conversion"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                      name="Data Conversion Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input].Columns[LevelName]"
+                          cachedDataType="nText"
+                          cachedName="LevelName"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[LevelName]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output]"
+                      exclusionGroup="1"
+                      name="Data Conversion Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          length="50"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]"
+                          name="LevelName_Converted"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the input column used as the source of data for the conversion."
+                              name="SourceInputColumnLineageID">#{Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[LevelName]}</property>
+                            <property
+                              dataType="System.Boolean"
+                              description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                              name="FastParse">false</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Data Conversion Error Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Level Names"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+       Capt_Code,
+       Capt_US
+FROM [dbo].[Custom_Captions] 
+WHERE 
+[Capt_Family] = N'prod_levelname' 
+AND [Capt_FamilyType] LIKE '%Choices%'</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Connections[OleDbConnection]"
+                      connectionManagerID="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CRM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          length="80"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]"
+                          name="crmLevelNameCode"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[LevelName]"
+                          dataType="nText"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[LevelName]"
+                          name="LevelName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].ExternalColumns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          name="Capt_Code" />
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].ExternalColumns[Capt_US]"
+                          dataType="nText"
+                          name="Capt_US" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          dataType="wstr"
+                          length="80"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[Capt_Code]"
+                          name="Capt_Code" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          dataType="nText"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[Capt_US]"
+                          name="Capt_US" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data"
+                  componentClassID="Microsoft.ConditionalSplit"
+                  contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+                  name="Identify Changed Data"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      description="Input to the Conditional Split Transformation"
+                      name="Conditional Split Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[LevelName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="LevelName_Converted"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]" />
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input].Columns[Lkup_LevelName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="Lkup_LevelName"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output].Columns[Lkup_LevelName]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[OutputRows]"
+                      description="Output 1 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="OutputRows"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">#{Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]} != #{Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output].Columns[Lkup_LevelName]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">LevelName_Converted != Lkup_LevelName</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">0</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Default Output]"
+                      description="Default Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      name="Conditional Split Default Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          name="IsDefaultOut">true</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output]"
+                      description="Error Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Conditional Split Error Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names"
+                  componentClassID="Microsoft.Lookup"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Identify New Level Names"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+
+
+
+ 
+         crmLevelNameCode,
+
+
+
+
+         LevelName
+
+
+FROM 
+[Global].[LevelNames]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT
+
+
+
+ 
+         crmLevelNameCode,
+
+
+
+
+         LevelName
+
+
+FROM 
+[Global].[LevelNames]) [refTable]
+where [refTable].[crmLevelNameCode] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="crmLevelNameCode" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LevelName" dataType="DT_WSTR" length="50" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input].Columns[crmLevelNameCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmLevelNameCode"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">crmLevelNameCode</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output].Columns[Lkup_LevelName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="50"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output].Columns[Lkup_LevelName]"
+                          name="Lkup_LevelName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">LevelName</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Insert New Records"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Global].[LevelNames]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[crmLevelNameCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmLevelNameCode"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmLevelNameCode]"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]" />
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].Columns[LevelName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="LevelName_Converted"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[LevelName]"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[LevelNameId]"
+                          dataType="i4"
+                          name="LevelNameId" />
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[LevelName]"
+                          dataType="wstr"
+                          length="50"
+                          name="LevelName" />
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[crmLevelNameCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmLevelNameCode" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Stage updates"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[GlobalStaging].[LevelNames]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[crmLevelNameCode]"
+                          cachedDataType="wstr"
+                          cachedLength="80"
+                          cachedName="crmLevelNameCode"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmLevelNameCode]"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output].Columns[crmLevelNameCode]" />
+                        <inputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].Columns[LevelName_Converted]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="LevelName_Converted"
+                          externalMetadataColumnId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[LevelName]"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output].Columns[LevelName_Converted]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[crmLevelNameCode]"
+                          dataType="wstr"
+                          length="80"
+                          name="crmLevelNameCode" />
+                        <externalMetadataColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input].ExternalColumns[LevelName]"
+                          dataType="wstr"
+                          length="50"
+                          name="LevelName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Level Names\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
+                  endId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Inputs[Lookup Input]"
+                  name="Data Conversion Output"
+                  startId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Outputs[Data Conversion Output]" />
+                <path
+                  refId="Package\Level Names\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
+                  endId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Inputs[Conditional Split Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Level Names\Insert New Grades and Stage Changes.Paths[Lookup No Match Output]"
+                  endId="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records.Inputs[OLE DB Destination Input]"
+                  name="Lookup No Match Output"
+                  startId="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names.Outputs[Lookup No Match Output]" />
+                <path
+                  refId="Package\Level Names\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
+                  endId="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion.Inputs[Data Conversion Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\Level Names\Insert New Grades and Stage Changes.Paths[OutputRows]"
+                  endId="Package\Level Names\Insert New Grades and Stage Changes\Stage updates.Inputs[OLE DB Destination Input]"
+                  name="OutputRows"
+                  startId="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data.Outputs[OutputRows]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Level Names\Update changed records"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{c07dc6e6-f6d3-4f4f-b6d2-266565bb4e53}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Update changed records"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2017 RC1; © 2017 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
+              SQLTask:SqlStatementSource="update A&#xA; set &#xA;  A.LevelName = change.LevelName&#xA;from&#xA; Global.LevelNames as A&#xA;inner join&#xA; GlobalStaging.LevelNames as change&#xA;on&#xA; A.crmLevelNameCode = change.crmLevelNameCode" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Level Names.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1b67807d-073b-41a5-b15c-1cec4234be83}"
+          DTS:From="Package\Level Names\Clear staging tables"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Level Names\Insert New Grades and Stage Changes" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Level Names.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{145f1947-3549-47d5-86dc-cf34ed3272e7}"
+          DTS:From="Package\Level Names\Insert New Grades and Stage Changes"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Level Names\Update changed records" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -3492,6 +4351,14 @@ where [refTable].[crmItemTypeCode] = ?</property>
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
       DTS:To="Package\Item Types" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{0E4A1AD5-9434-4903-8918-C88561C857B3}"
+      DTS:From="Package\Item Types"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Level Names" />
   </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -3504,7 +4371,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="172,42"
           Id="Package\Brand Series\Clear staging tables"
@@ -3742,50 +4609,6 @@ where [refTable].[crmItemTypeCode] = ?</property>
           Size="246,333"
           Id="Package\Grades"
           TopLeft="778,66" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="324,228">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="93,0"
-              Start="0,0"
-              End="85.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="85.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="674,231">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="104,0"
-              Start="0,0"
-              End="96.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="96.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <NodeLayout
           Size="172,42"
           Id="Package\Item Types\Clear staging tables"
@@ -3862,6 +4685,50 @@ where [refTable].[crmItemTypeCode] = ?</property>
           Id="Package\Item Types"
           TopLeft="1126,63" />
         <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="324,228">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93,0"
+              Start="0,0"
+              End="85.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="85.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="674,231">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104,0"
+              Start="0,0"
+              End="96.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="96.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="1024,231">
           <EdgeLayout.Curve>
@@ -3875,6 +4742,115 @@ where [refTable].[crmItemTypeCode] = ?</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="94.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="172,42"
+          Id="Package\Level Names\Clear staging tables"
+          TopLeft="28,11" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes"
+          TopLeft="40,89" />
+        <NodeLayout
+          Size="194,42"
+          Id="Package\Level Names\Update changed records"
+          TopLeft="28,173" />
+        <EdgeLayout
+          Id="Package\Level Names.PrecedenceConstraints[Constraint]"
+          TopLeft="114,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.5,36"
+              Start="0,0"
+              End="11.5,28.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14"
+                    Point2="0,18"
+                    Point3="4,18" />
+                  <mssgle:LineSegment
+                    End="7.5,18" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.5,18"
+                    Point2="11.5,18"
+                    Point3="11.5,22" />
+                  <mssgle:LineSegment
+                    End="11.5,28.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Level Names.PrecedenceConstraints[Constraint 1]"
+          TopLeft="125.25,131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42"
+              Start="0,0"
+              End="0,34.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="306,290"
+          Size="306,333"
+          Id="Package\Level Names"
+          TopLeft="61,473" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1249,396">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-1035,77"
+              Start="0,0"
+              End="-1035,69.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.5"
+                    Point2="0,38.5"
+                    Point3="-4,38.5" />
+                  <mssgle:LineSegment
+                    End="-1031,38.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-1031,38.5"
+                    Point2="-1035,38.5"
+                    Point3="-1035,42.5" />
+                  <mssgle:LineSegment
+                    End="-1035,69.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -4861,7 +5837,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -4871,7 +5847,7 @@ where [refTable].[crmItemTypeCode] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4901,6 +5877,247 @@ where [refTable].[crmItemTypeCode] = ?</property>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Item Types\Insert New Grades and Stage Changes\Insert New Records">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Level Names\Insert New Grades and Stage Changes">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="185,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Identify Changed Data"
+          TopLeft="722,182" />
+        <NodeLayout
+          Size="202,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names"
+          TopLeft="221,207" />
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Stage updates"
+          TopLeft="738,330" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names"
+          TopLeft="253,42" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records"
+          TopLeft="207,346" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Level Names\Insert New Grades and Stage Changes\Data Conversion"
+          TopLeft="245,117" />
+        <EdgeLayout
+          Id="Package\Level Names\Insert New Grades and Stage Changes.Paths[OLE DB Source Output]"
+          TopLeft="332,84">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9,33"
+              Start="0,0"
+              End="-9,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="-4,16.5" />
+                  <mssgle:LineSegment
+                    End="-5,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5,16.5"
+                    Point2="-9,16.5"
+                    Point3="-9,20.5" />
+                  <mssgle:LineSegment
+                    End="-9,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Level Names\Insert New Grades and Stage Changes.Paths[Data Conversion Output]"
+          TopLeft="322.5,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48"
+              Start="0,0"
+              End="0,40.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Level Names\Insert New Grades and Stage Changes.Paths[Lookup No Match Output]"
+          TopLeft="322,249">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-29.5,97"
+              Start="0,0"
+              End="-29.5,89.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.5"
+                    Point2="0,48.5"
+                    Point3="-4,48.5" />
+                  <mssgle:LineSegment
+                    End="-25.5,48.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-25.5,48.5"
+                    Point2="-29.5,48.5"
+                    Point3="-29.5,52.5" />
+                  <mssgle:LineSegment
+                    End="-29.5,89.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-70.55638671875,53.5,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Level Names\Insert New Grades and Stage Changes.Paths[Lookup Match Output]"
+          TopLeft="423,228">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="299,-25"
+              Start="0,0"
+              End="291.5,-25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="145.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="145.5,0"
+                    Point2="149.5,0"
+                    Point3="149.5,-4" />
+                  <mssgle:LineSegment
+                    End="149.5,-21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="149.5,-21"
+                    Point2="149.5,-25"
+                    Point3="153.5,-25" />
+                  <mssgle:LineSegment
+                    End="291.5,-25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="101.30861328125,1,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Level Names\Insert New Grades and Stage Changes.Paths[OutputRows]"
+          TopLeft="812.75,224">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,106"
+              Start="0,0"
+              End="0,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-27.73009765625,43.533203125,55.4601953125,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Level Names\Insert New Grades and Stage Changes\Identify New Level Names">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Level Names\Insert New Grades and Stage Changes\Stage updates">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Level Names\Insert New Grades and Stage Changes\Get Level Names">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Level Names\Insert New Grades and Stage Changes\Insert New Records">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
