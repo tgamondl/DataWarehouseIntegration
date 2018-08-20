@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:ObjectName="CRM"
   DTS:DTSID="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}"

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:ObjectName="DataMirror"
   DTS:DTSID="{89CDB119-6E69-41CE-9FB3-C3855DF16310}"

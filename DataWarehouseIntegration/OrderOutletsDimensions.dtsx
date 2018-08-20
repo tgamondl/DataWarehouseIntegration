@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="8/16/2018 12:46:35 PM"
@@ -12,7 +12,7 @@
   DTS:ObjectName="OrderOutletsDimensions"
   DTS:PackageType="5"
   DTS:VersionBuild="1"
-  DTS:VersionGUID="{EED99893-0096-4624-9C74-7DB5B5456613}">
+  DTS:VersionGUID="{935341E6-3D3A-4CA4-9555-1E22F746866B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -22,7 +22,7 @@
 <!--If you manually edit this section and make a mistake, you can delete it. -->
 <!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
 <Objects
-  Version="8">
+  Version="sql12">
   <!--Each node below will contain properties that do not affect runtime behavior.-->
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>

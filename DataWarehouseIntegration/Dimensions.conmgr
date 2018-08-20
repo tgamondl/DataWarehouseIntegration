@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:ObjectName="Dimensions"
   DTS:DTSID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
