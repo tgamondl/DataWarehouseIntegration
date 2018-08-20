@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ProductsDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="30"
-  DTS:VersionGUID="{7061B723-1549-460F-81F8-131E82C3621B}">
+  DTS:VersionBuild="35"
+  DTS:VersionGUID="{602463BE-C9B2-4FDC-BF70-C20E939B705D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -10957,6 +10957,52 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
                               name="FriendlyExpression">REPLACENULL(ProductName,"NameNotProvided")</property>
                           </properties>
                         </inputColumn>
+                        <inputColumn
+                          refId="Package\Products\Insert New Records and Stage Changes\Populate Nulls.Inputs[Derived Column Input].Columns[MathUsers]"
+                          cachedDataType="i4"
+                          cachedName="MathUsers"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Products\Insert New Records and Stage Changes\Get products.Outputs[OLE DB Source Output].Columns[MathUsers]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Products\Insert New Records and Stage Changes\Get products.Outputs[OLE DB Source Output].Columns[MathUsers]},0)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(MathUsers,0)</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Products\Insert New Records and Stage Changes\Populate Nulls.Inputs[Derived Column Input].Columns[Users]"
+                          cachedDataType="i4"
+                          cachedName="Users"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Products\Insert New Records and Stage Changes\Get products.Outputs[OLE DB Source Output].Columns[Users]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Products\Insert New Records and Stage Changes\Get products.Outputs[OLE DB Source Output].Columns[Users]},0)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(Users,0)</property>
+                          </properties>
+                        </inputColumn>
                       </inputColumns>
                       <externalMetadataColumns />
                     </input>
@@ -19648,7 +19694,7 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
         <NodeLayout
           Size="171,42"
           Id="Package\Products\Insert New Records and Stage Changes\Insert New Records"
-          TopLeft="60,550.75" />
+          TopLeft="98,493.75" />
         <NodeLayout
           Size="183,42"
           Id="Package\Products\Insert New Records and Stage Changes\Identify New Products"
@@ -19659,33 +19705,33 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-94.0833333333333,169.25"
+              EndConnector="-56.0833333333333,112.25"
               Start="0,0"
-              End="-94.0833333333333,161.75">
+              End="-56.0833333333333,104.75">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,64.580173347779" />
+                    End="0,41.4837486457205" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,64.580173347779"
-                    Point2="0,68.580173347779"
-                    Point3="-4,68.580173347779" />
+                    Point1="0,41.4837486457205"
+                    Point2="0,45.4837486457205"
+                    Point3="-4,45.4837486457205" />
                   <mssgle:LineSegment
-                    End="-90.0833333333333,68.580173347779" />
+                    End="-52.0833333333333,45.4837486457205" />
                   <mssgle:CubicBezierSegment
-                    Point1="-90.0833333333333,68.580173347779"
-                    Point2="-94.0833333333333,68.580173347779"
-                    Point3="-94.0833333333333,72.580173347779" />
+                    Point1="-52.0833333333333,45.4837486457205"
+                    Point2="-56.0833333333333,45.4837486457205"
+                    Point3="-56.0833333333333,49.4837486457205" />
                   <mssgle:LineSegment
-                    End="-94.0833333333333,161.75" />
+                    End="-56.0833333333333,104.75" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-102.848053385417,73.580173347779,111.6127734375,11.609375"
+              BoundingBox="-83.8480533854166,50.4837486457205,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -20074,40 +20120,40 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
         <NodeLayout
           Size="177,42"
           Id="Package\Products\Insert New Records and Stage Changes\Stage updates Brand"
-          TopLeft="1123,446" />
+          TopLeft="1122,417" />
         <EdgeLayout
           Id="Package\Products\Insert New Records and Stage Changes.Paths[ChangedBrand]"
           TopLeft="633.829545454546,1089.125">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="577.670454545455,-601.125"
+              EndConnector="576.670454545455,-630.125"
               Start="0,0"
-              End="577.670454545455,-593.625">
+              End="576.670454545455,-622.625">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-282.897058823529" />
+                    End="0,-296.737798612895" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,-282.897058823529"
-                    Point2="0,-286.897058823529"
-                    Point3="4,-286.897058823529" />
+                    Point1="0,-296.737798612895"
+                    Point2="0,-300.737798612895"
+                    Point3="4,-300.737798612895" />
                   <mssgle:LineSegment
-                    End="573.670454545455,-286.897058823529" />
+                    End="572.670454545455,-300.737798612895" />
                   <mssgle:CubicBezierSegment
-                    Point1="573.670454545455,-286.897058823529"
-                    Point2="577.670454545455,-286.897058823529"
-                    Point3="577.670454545455,-290.897058823529" />
+                    Point1="572.670454545455,-300.737798612895"
+                    Point2="576.670454545455,-300.737798612895"
+                    Point3="576.670454545455,-304.737798612895" />
                   <mssgle:LineSegment
-                    End="577.670454545455,-593.625" />
+                    End="576.670454545455,-622.625" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="256.034719460227,-281.897058823529,65.601015625,11.6630859375"
+              BoundingBox="255.534719460227,-295.737798612895,65.601015625,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
