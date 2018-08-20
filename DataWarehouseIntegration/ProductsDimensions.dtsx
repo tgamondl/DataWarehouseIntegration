@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ProductsDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="28"
-  DTS:VersionGUID="{9518F727-29A8-4EC7-A8B0-6AC341DDF59B}">
+  DTS:VersionBuild="30"
+  DTS:VersionGUID="{7061B723-1549-460F-81F8-131E82C3621B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -16552,7 +16552,7 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}"
-              SQLTask:SqlStatementSource="update A&#xA; set &#xA;  A.ProductLevelType = change.ProductLevelType&#xA;from&#xA; Global.ProductLevelTypes as A&#xA;inner join&#xA; GlobalStaging.ProductLevelTypes as change&#xA;on&#xA; A.crmProductLevelTypeCode = change.crmProductLevelTypeCode" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="update A&#xA; set &#xA;  A.BlockLevel = change.BlockLevel,&#xA;  A.BrandId = change.BrandId,&#xA;  A.BrandSeriesId = change.BrandSeriesId,&#xA;  A.FriendlyName = change.FriendlyName,&#xA;  A.GradeId = change.GradeId,&#xA;  A.InsertLevel = change.InsertLevel,&#xA;  A.InventoryItem = change.InventoryItem,&#xA;  A.ItemTypeId = change.ItemTypeId,&#xA;  A.LevelNameId = change.LevelNameId,&#xA;  A.MathUsers = change.MathUsers,&#xA;  A.NationalEditionId = change.NationalEditionId,&#xA;  A.OverlayLevel = change.OverlayLevel,&#xA;  A.PackTypeId = change.PackTypeId,&#xA;  A.ProductLevelTypeId = change.ProductLevelTypeId,&#xA;  A.ProductName = change.ProductName,&#xA;  A.PurchaseItem = change.PurchaseItem,&#xA;  A.SellingItem = change.SellingItem,&#xA;  A.Users = change.Users&#xA;from&#xA; Global.Products as A&#xA;inner join&#xA; GlobalStaging.Products as change&#xA;on&#xA; A.ProductSku = change.ProductSku" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -17297,20 +17297,20 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
         <NodeLayout
           Size="266,42"
           Id="Package\Products\Insert New Records and Stage Changes"
-          TopLeft="32,89" />
+          TopLeft="23,89" />
         <NodeLayout
           Size="194,42"
           Id="Package\Products\Update changed records"
-          TopLeft="28,173" />
+          TopLeft="44,177" />
         <EdgeLayout
           Id="Package\Products.PrecedenceConstraints[Constraint]"
           TopLeft="114,53">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="50.75,36"
+              EndConnector="42,36"
               Start="0,0"
-              End="50.75,28.5">
+              End="42,28.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
@@ -17321,13 +17321,13 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
                     Point2="0,18"
                     Point3="4,18" />
                   <mssgle:LineSegment
-                    End="46.75,18" />
+                    End="38,18" />
                   <mssgle:CubicBezierSegment
-                    Point1="46.75,18"
-                    Point2="50.75,18"
-                    Point3="50.75,22" />
+                    Point1="38,18"
+                    Point2="42,18"
+                    Point3="42,22" />
                   <mssgle:LineSegment
-                    End="50.75,28.5" />
+                    End="42,28.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -17338,30 +17338,30 @@ where [refTable].[crmProductLevelTypeCode] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Products.PrecedenceConstraints[Constraint 1]"
-          TopLeft="164.75,131">
+          TopLeft="156,131">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-39.75,42"
+              EndConnector="-15,46"
               Start="0,0"
-              End="-39.75,34.5">
+              End="-15,38.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,17" />
+                    End="0,19" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,17"
-                    Point2="0,21"
-                    Point3="-4,21" />
+                    Point1="0,19"
+                    Point2="0,23"
+                    Point3="-4,23" />
                   <mssgle:LineSegment
-                    End="-35.75,21" />
+                    End="-11,23" />
                   <mssgle:CubicBezierSegment
-                    Point1="-35.75,21"
-                    Point2="-39.75,21"
-                    Point3="-39.75,25" />
+                    Point1="-11,23"
+                    Point2="-15,23"
+                    Point3="-15,27" />
                   <mssgle:LineSegment
-                    End="-39.75,34.5" />
+                    End="-15,38.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
