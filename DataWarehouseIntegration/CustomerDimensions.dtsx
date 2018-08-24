@@ -2,19 +2,19 @@
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="8/16/2018 12:46:09 PM"
-  DTS:CreationName="Microsoft.Package"
+  DTS:CreationName="SSIS.Package.3"
   DTS:CreatorComputerName="PL-8V8Q1IU"
   DTS:CreatorName="MATHUSEE\tomgamon"
   DTS:DTSID="{9FD2B7E9-ECF4-42EF-8E75-CD1FA9F5D78D}"
-  DTS:ExecutableType="Microsoft.Package"
+  DTS:ExecutableType="SSIS.Package.3"
   DTS:LastModifiedProductVersion="14.0.3002.92"
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomerDimensions"
   DTS:PackageType="5"
   DTS:VersionBuild="1"
-  DTS:VersionGUID="{A3EEC603-1D47-4E5D-B184-B3ABCB10C918}">
+  DTS:VersionGUID="{F8D9C5E4-1FC4-4B5A-9D6D-9E2CB5A7B5D3}">
   <DTS:Property
-    DTS:Name="PackageFormatVersion">8</DTS:Property>
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables />
   <DTS:Executables />
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
@@ -22,7 +22,7 @@
 <!--If you manually edit this section and make a mistake, you can delete it. -->
 <!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
 <Objects
-  Version="sql12">
+  Version="sql11">
   <!--Each node below will contain properties that do not affect runtime behavior.-->
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>

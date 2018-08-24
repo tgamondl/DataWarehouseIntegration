@@ -26,7 +26,7 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">PL-8V8Q1IU</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkw+FVr0PTk2wRJQ9h0244gAAAAACAAAAAAADZgAAwAAAABAAAADGnXuv+YEHB/Mt92SAa195AAAAAASAAACgAAAAEAAAAEHdO9ronkhRu6eijuAI116IAAAA/gAsxCZnUN4HvLnCGS2+fVfOGwgLcF97x2NNfzRyxUjZMIW9f448PgjThPneQMprR8L52+ondM0Y7Un7Fpk/JSnr3lCxTFKdt1nIqj8/w9zgRnXf3MijAuf2Mgc+P8HeyD3XF5K5tbV/2dz9ktNDy9J62x4cSKS2HFQuNDZapXev+BCHR13ZCxQAAAC4IBG32Vs7cCFn/uFr53K3J0DkFg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAkw+FVr0PTk2wRJQ9h0244gAAAAACAAAAAAADZgAAwAAAABAAAABJDqSpdZFCrW6rO2afhuozAAAAAASAAACgAAAAEAAAALwwHFNPgk2Y6LLXGPcVN3mIAAAAZw+zPtBl4vUR0LP1dpvNCo3yC7QJX9/SXxbrZN100DSQ1shsVcYx9cFeMZjJOq1bppIJ+Dmfs9rDk1j/9Rv5cD9Tw8nZgRIUedTp2RNtEsfiGUmYt7XN/owvwj/7tKwaTQZ9ITZk3Bw7ERNaI6HnBDLZuP8eD2rfgmvi7U+Pn8Ae2CABMfgcvhQAAADroR6yStnbWqoy8y1e+n2QJXhqnQ==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -315,11 +315,11 @@
                 <SSIS:Property SSIS:Name="Name">ProductsDimensions</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">35</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">36</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{03FDB805-0CA7-4144-AFD4-E74005CCBC6A}</SSIS:Property>
-                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{EBF0787B-C6E9-4E6B-9E3E-4ED96864A7F6}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">6</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
                 <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
@@ -410,7 +410,7 @@
         <ConnectionProviderMappings />
         <ConnectionSecurityMappings />
         <DatabaseStorageLocations />
-        <TargetServerVersion>SQLServer2014</TargetServerVersion>
+        <TargetServerVersion>SQLServer2012</TargetServerVersion>
         <ParameterConfigurationValues>
           <ConfigurationSetting>
             <Id>LastModifiedTime</Id>

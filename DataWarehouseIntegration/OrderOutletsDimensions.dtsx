@@ -2,19 +2,19 @@
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="8/16/2018 12:46:35 PM"
-  DTS:CreationName="Microsoft.Package"
+  DTS:CreationName="SSIS.Package.3"
   DTS:CreatorComputerName="PL-8V8Q1IU"
   DTS:CreatorName="MATHUSEE\tomgamon"
   DTS:DTSID="{0CD92E63-AC43-4C50-A31C-42BB6380DE17}"
-  DTS:ExecutableType="Microsoft.Package"
+  DTS:ExecutableType="SSIS.Package.3"
   DTS:LastModifiedProductVersion="14.0.3002.92"
   DTS:LocaleID="1033"
   DTS:ObjectName="OrderOutletsDimensions"
   DTS:PackageType="5"
   DTS:VersionBuild="1"
-  DTS:VersionGUID="{935341E6-3D3A-4CA4-9555-1E22F746866B}">
+  DTS:VersionGUID="{94D9DEAF-4026-4FE7-8910-46E7009B3D07}">
   <DTS:Property
-    DTS:Name="PackageFormatVersion">8</DTS:Property>
+    DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables />
   <DTS:Executables />
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
@@ -22,7 +22,7 @@
 <!--If you manually edit this section and make a mistake, you can delete it. -->
 <!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
 <Objects
-  Version="sql12">
+  Version="sql11">
   <!--Each node below will contain properties that do not affect runtime behavior.-->
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
