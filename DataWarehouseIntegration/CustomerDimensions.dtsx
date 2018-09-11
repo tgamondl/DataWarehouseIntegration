@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="8/16/2018 12:46:09 PM"
@@ -11,12 +11,2058 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomerDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="1"
-  DTS:VersionGUID="{F8D9C5E4-1FC4-4B5A-9D6D-9E2CB5A7B5D3}">
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{E43BA078-429F-42E6-BF25-79254A07041C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables />
-  <DTS:Executables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Customers"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{9A3A7491-1184-4BA5-A7E7-9F1A7D2463B1}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Customers">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Customers\Apply Updates"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8E926DBE-D73C-4D31-AB90-6B455A768E4C}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Apply Updates"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Customers\Clear staging table(s)"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{E4316E77-BE05-49E8-B5C0-33F0BB856B30}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Clear staging table(s)"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Customers\Insert New Records and Stage Updates"
+          DTS:CreationName="SSIS.Pipeline.3"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{DA9B8C44-3A97-4181-A2BE-7BD31F601CF2}"
+          DTS:ExecutableType="SSIS.Pipeline.3"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Insert New Records and Stage Updates"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM"
+                  componentClassID="DTSAdapter.OLEDBSource.3"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="Get Customer records from CRM"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset"></property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select
+Comp_CompanyId as CustomerId,
+Comp_PrimaryPersonId as PrimaryPersonId,
+Comp_PrimaryAddressId as PrimaryAddressId,
+Comp_PrimaryUserId as PrimarySalespersonId,
+Comp_Name as CustomerName,
+comp_mas_ardivisionno as SageCustomerDivisionNo,
+comp_mas_customerno as SageCustomerNo,
+comp_mas_salespersondivisionno as SageSalespersonDivisionNo,
+comp_mas_salespersonno as SageSalespersonNo,
+comp_School_Type,
+comp_sbu,
+comp_SalesStage
+from
+dbo.Company</property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">2</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Connections[OleDbConnection]"
+                      connectionManagerID="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[CRM]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                          name="CustomerId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimaryPersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]"
+                          name="PrimaryPersonId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimaryAddressId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]"
+                          name="PrimaryAddressId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimarySalespersonId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimarySalespersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimarySalespersonId]"
+                          name="PrimarySalespersonId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[CustomerName]"
+                          length="60"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]"
+                          name="CustomerName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerDivisionNo]"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerDivisionNo]"
+                          name="SageCustomerDivisionNo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerNo]"
+                          length="20"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerNo]"
+                          name="SageCustomerNo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageSalespersonDivisionNo]"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonDivisionNo]"
+                          name="SageSalespersonDivisionNo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageSalespersonNo]"
+                          length="4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonNo]"
+                          name="SageSalespersonNo"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_School_Type]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_School_Type]"
+                          length="40"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_School_Type]"
+                          name="comp_School_Type"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_sbu]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_sbu]"
+                          length="40"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_sbu]"
+                          name="comp_sbu"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_SalesStage]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_SalesStage]"
+                          length="20"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_SalesStage]"
+                          name="comp_SalesStage"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                          dataType="i4"
+                          name="CustomerId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimaryPersonId]"
+                          dataType="i4"
+                          name="PrimaryPersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimaryAddressId]"
+                          dataType="i4"
+                          name="PrimaryAddressId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[PrimarySalespersonId]"
+                          dataType="i4"
+                          name="PrimarySalespersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[CustomerName]"
+                          dataType="wstr"
+                          length="60"
+                          name="CustomerName" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageCustomerDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerNo]"
+                          dataType="wstr"
+                          length="20"
+                          name="SageCustomerNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageSalespersonDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageSalespersonNo]"
+                          dataType="wstr"
+                          length="4"
+                          name="SageSalespersonNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_School_Type]"
+                          dataType="wstr"
+                          length="40"
+                          name="comp_School_Type" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_sbu]"
+                          dataType="wstr"
+                          length="40"
+                          name="comp_sbu" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[comp_SalesStage]"
+                          dataType="wstr"
+                          length="20"
+                          name="comp_SalesStage" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                          name="CustomerId" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimaryPersonId]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimaryPersonId]"
+                          name="PrimaryPersonId" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimaryAddressId]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimaryAddressId]"
+                          name="PrimaryAddressId" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimarySalespersonId]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[PrimarySalespersonId]"
+                          name="PrimarySalespersonId" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[CustomerName]"
+                          dataType="wstr"
+                          length="60"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[CustomerName]"
+                          name="CustomerName" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerDivisionNo]"
+                          name="SageCustomerDivisionNo" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerNo]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerNo]"
+                          name="SageCustomerNo" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageSalespersonDivisionNo]"
+                          name="SageSalespersonDivisionNo" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageSalespersonNo]"
+                          dataType="wstr"
+                          length="4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageSalespersonNo]"
+                          name="SageSalespersonNo" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_School_Type]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_School_Type]"
+                          name="comp_School_Type" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_sbu]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_sbu]"
+                          name="comp_sbu" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_SalesStage]"
+                          dataType="wstr"
+                          length="20"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_SalesStage]"
+                          name="comp_SalesStage" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes"
+                  componentClassID="DTSTransform.ConditionalSplit.3"
+                  contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+                  name="Identify Changes"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      description="Input to the Conditional Split Transformation"
+                      name="Conditional Split Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[PrimaryPersonId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryPersonId"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[PrimaryAddressId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryAddressId"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[Lkup_PrimaryPersonId]"
+                          cachedDataType="i4"
+                          cachedName="Lkup_PrimaryPersonId"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryPersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[Lkup_PrimaryAddressId]"
+                          cachedDataType="i4"
+                          cachedName="Lkup_PrimaryAddressId"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryAddressId]" />
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Person]"
+                      description="Output 1 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Person"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]},-1) != [REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryPersonId]},-1)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(PrimaryPersonId,-1) != REPLACENULL(Lkup_PrimaryPersonId,-1)</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">0</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Address]"
+                      description="Output 2 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Address"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]},-1) != [REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryAddressId]},-1)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(PrimaryAddressId,-1) != REPLACENULL(Lkup_PrimaryAddressId,-1)</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">1</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Salesperson]"
+                      description="Output 3 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Salesperson"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">2</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[CustomerName]"
+                      description="Output 4 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="CustomerName"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">3</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageDivisionNo]"
+                      description="Output 5 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SageDivisionNo"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">4</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageCustomerNo]"
+                      description="Output 6 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SageCustomerNo"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">5</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageSalesDivisionNo]"
+                      description="Output 7 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SageSalesDivisionNo"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">6</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageSalespersonNo]"
+                      description="Output 8 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SageSalespersonNo"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">7</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SchoolType]"
+                      description="Output 9 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SchoolType"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">8</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Sbu]"
+                      description="Output 10 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="Sbu"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">9</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SalesStage]"
+                      description="Output 11 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SalesStage"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression"></property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression"></property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">10</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Default Output]"
+                      description="Default Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      name="Conditional Split Default Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          name="IsDefaultOut">true</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Error Output]"
+                      description="Error Output of the Conditional Split Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Conditional Split Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records"
+                  componentClassID="DTSAdapter.OLEDBDestination.3"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Insert New Records"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Global].[Customers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[CustomerId]"
+                          cachedDataType="i4"
+                          cachedName="CustomerId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[PrimaryPersonId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryPersonId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[PrimaryAddressId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryAddressId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryAddressId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[PrimarySalespersonId]"
+                          cachedDataType="i4"
+                          cachedName="PrimarySalespersonId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimarySalespersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimarySalespersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[CustomerName]"
+                          cachedDataType="wstr"
+                          cachedLength="60"
+                          cachedName="CustomerName"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SageCustomerDivisionNo]"
+                          cachedDataType="wstr"
+                          cachedLength="2"
+                          cachedName="SageCustomerDivisionNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerDivisionNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerDivisionNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SageCustomerNo]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="SageCustomerNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SageSalespersonDivisionNo]"
+                          cachedDataType="wstr"
+                          cachedLength="2"
+                          cachedName="SageSalespersonDivisionNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonDivisionNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonDivisionNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SageSalespersonNo]"
+                          cachedDataType="wstr"
+                          cachedLength="4"
+                          cachedName="SageSalespersonNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SchoolTypeId]"
+                          cachedDataType="i4"
+                          cachedName="SchoolTypeId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SchoolTypeId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SbuId]"
+                          cachedDataType="i4"
+                          cachedName="SbuId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SbuId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SalesStageId]"
+                          cachedDataType="i4"
+                          cachedName="SalesStageId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          dataType="i4"
+                          name="CustomerId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPersonId]"
+                          dataType="i4"
+                          name="PrimaryPersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryAddressId]"
+                          dataType="i4"
+                          name="PrimaryAddressId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[PrimarySalespersonId]"
+                          dataType="i4"
+                          name="PrimarySalespersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          dataType="wstr"
+                          length="60"
+                          name="CustomerName" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageCustomerDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerNo]"
+                          dataType="wstr"
+                          length="20"
+                          name="SageCustomerNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageSalespersonDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonNo]"
+                          dataType="wstr"
+                          length="4"
+                          name="SageSalespersonNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SchoolTypeId]"
+                          dataType="i4"
+                          name="SchoolTypeId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SbuId]"
+                          dataType="i4"
+                          name="SbuId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
+                          dataType="i4"
+                          name="SalesStageId" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records"
+                  componentClassID="DTSTransform.Lookup.3"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup new records"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select 
+CustomerId,
+PrimaryPersonId,
+PrimaryAddressId,
+PrimarySalespersonId,
+CustomerName,
+SageCustomerDivisionNo,
+SageCustomerNo,
+SageSalespersonDivisionNo,
+SageSalespersonNo,
+SchoolTypeId,
+SbuId,
+SalesStageId
+from [Global].[Customers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select 
+CustomerId,
+PrimaryPersonId,
+PrimaryAddressId,
+PrimarySalespersonId,
+CustomerName,
+SageCustomerDivisionNo,
+SageCustomerNo,
+SageSalespersonDivisionNo,
+SageSalespersonNo,
+SchoolTypeId,
+SbuId,
+SalesStageId
+from [Global].[Customers]) [refTable]
+where [refTable].[CustomerId] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">1</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryPersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryAddressId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimarySalespersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerName" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerNo" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonNo" dataType="DT_WSTR" length="4" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SchoolTypeId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SbuId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SalesStageId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input].Columns[CustomerId]"
+                          cachedDataType="i4"
+                          cachedName="CustomerId"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">CustomerId</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryPersonId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryPersonId]"
+                          name="Lkup_PrimaryPersonId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">PrimaryPersonId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryAddressId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimaryAddressId]"
+                          name="Lkup_PrimaryAddressId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">PrimaryAddressId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimarySalespersonId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_PrimarySalespersonId]"
+                          name="Lkup_PrimarySalespersonId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">PrimarySalespersonId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_CustomerName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="60"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_CustomerName]"
+                          name="Lkup_CustomerName"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">CustomerName</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerDivisionNo]"
+                          name="Lkup_SageCustomerDivisionNo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SageCustomerDivisionNo</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="20"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerNo]"
+                          name="Lkup_SageCustomerNo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SageCustomerNo</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="2"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageSalespersonDivisionNo]"
+                          name="Lkup_SageSalespersonDivisionNo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SageSalespersonDivisionNo</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageSalespersonNo]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Copy Column"
+                          length="4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageSalespersonNo]"
+                          name="Lkup_SageSalespersonNo"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SageSalespersonNo</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SchoolTypeId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SchoolTypeId]"
+                          name="Lkup_SchoolTypeId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SchoolTypeId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SbuId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SbuId]"
+                          name="Lkup_SbuId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SbuId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SalesStageId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SalesStageId]"
+                          name="Lkup_SalesStageId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SalesStageId</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage"
+                  componentClassID="DTSTransform.Lookup.3"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup Sales stage"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select
+SalesStageId,
+SageCRMLookup
+from
+[Global].[SalesStages]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select
+SalesStageId,
+SageCRMLookup
+from
+[Global].[SalesStages]) [refTable]
+where [refTable].[SageCRMLookup] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="SalesStageId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCRMLookup" dataType="DT_WSTR" length="40" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_SalesStage]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input].Columns[comp_SalesStage]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="comp_SalesStage"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_SalesStage]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">SageCRMLookup</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]"
+                          name="SalesStageId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SalesStageId</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU"
+                  componentClassID="DTSTransform.Lookup.3"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup SBU"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select
+SbuId,
+SageCRMLookupCode 
+from
+[Global].[StrategicBusinessUnits]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select
+SbuId,
+SageCRMLookupCode 
+from
+[Global].[StrategicBusinessUnits]) [refTable]
+where [refTable].[SageCRMLookupCode] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="SbuId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCRMLookupCode" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_sbu]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input].Columns[comp_sbu]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="comp_sbu"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_sbu]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">SageCRMLookupCode</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]"
+                          name="SbuId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SbuId</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type"
+                  componentClassID="DTSTransform.Lookup.3"
+                  contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+                  description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+                  name="Lookup School Type"
+                  usesDispositions="true"
+                  version="6">
+                  <properties>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the SQL statement that generates the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select 
+id,
+SageCrmCodeLookup
+from
+[Global].[SchoolType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                      expressionType="Notify"
+                      name="SqlCommandParam"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select 
+id,
+SageCrmCodeLookup
+from
+[Global].[SchoolType]) [refTable]
+where [refTable].[SageCrmCodeLookup] = ?</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the type of connection used to access the reference dataset."
+                      name="ConnectionType"
+                      typeConverter="LookupConnectionType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the cache type of the lookup table."
+                      name="CacheType"
+                      typeConverter="CacheType">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                      name="NoMatchBehavior"
+                      typeConverter="LookupNoMatchBehavior">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                      name="NoMatchCachePercentage">0</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                      name="MaxMemoryUsage">25</property>
+                    <property
+                      dataType="System.Int64"
+                      description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                      name="MaxMemoryUsage64">25</property>
+                    <property
+                      dataType="System.String"
+                      description="Indicates whether to reference metadata in an XML format."
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCrmCodeLookup" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                      name="ParameterMap">#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_School_Type]};</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                      name="TreatDuplicateKeysAsError">false</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="Connection manager used to access lookup data."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input]"
+                      name="Lookup Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input].Columns[comp_School_Type]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="comp_School_Type"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_School_Type]">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table that a column joins."
+                              name="JoinToReferenceColumn">SageCrmCodeLookup</property>
+                            <property
+                              dataType="System.Null"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn" />
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output]"
+                      errorOrTruncationOperation="Lookup"
+                      errorRowDisposition="IgnoreFailure"
+                      exclusionGroup="1"
+                      name="Lookup Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]"
+                          name="SchoolTypeId"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">id</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup No Match Output]"
+                      description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                      exclusionGroup="1"
+                      name="Lookup No Match Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Lookup Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls"
+                  componentClassID="DTSTransform.DerivedColumn.3"
+                  contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+                  description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+                  name="Populate Nulls"
+                  usesDispositions="true">
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input]"
+                      description="Input to the Derived Column Transformation"
+                      name="Derived Column Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input].Columns[CustomerName]"
+                          cachedDataType="wstr"
+                          cachedLength="60"
+                          cachedName="CustomerName"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]},"NotAvailable")</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(CustomerName,"NotAvailable")</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input].Columns[SchoolTypeId]"
+                          cachedDataType="i4"
+                          cachedName="SchoolTypeId"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]},1)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(SchoolTypeId,1)</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input].Columns[SbuId]"
+                          cachedDataType="i4"
+                          cachedName="SbuId"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]},5)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(SbuId,5)</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input].Columns[SalesStageId]"
+                          cachedDataType="i4"
+                          cachedName="SalesStageId"
+                          errorOrTruncationOperation="Computation"
+                          errorRowDisposition="FailComponent"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]"
+                          truncationRowDisposition="FailComponent"
+                          usageType="readWrite">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Expression"
+                              name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]},5)</property>
+                            <property
+                              containsID="true"
+                              dataType="System.String"
+                              description="Derived Column Friendly Expression"
+                              expressionType="Notify"
+                              name="FriendlyExpression">REPLACENULL(SalesStageId,5)</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Output]"
+                      description="Default Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      name="Derived Column Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input]">
+                      <externalMetadataColumns />
+                    </output>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Error Output]"
+                      description="Error Output of the Derived Column Transformation"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="Derived Column Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Derived Column Output]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Inputs[Lookup Input]"
+                  name="Derived Column Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Outputs[Derived Column Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output1]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output2]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Inputs[Lookup Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output3]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Populate Nulls.Inputs[Derived Column Input]"
+                  name="Lookup Match Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup No Match Output]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input]"
+                  name="Lookup No Match Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup No Match Output]" />
+                <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[OLE DB Source Output]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Inputs[Lookup Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Customers.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1D85B816-6909-4003-86B9-21E7ADDCED5A}"
+          DTS:From="Package\Customers\Clear staging table(s)"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Customers\Insert New Records and Stage Updates" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Customers.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{4D3EE6B0-83C7-401C-A70A-919E15BBCC81}"
+          DTS:From="Package\Customers\Insert New Records and Stage Updates"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Customers\Apply Updates" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
 <!--If you manually edit this section and make a mistake, you can delete it. -->
@@ -24,5 +2070,393 @@
 <Objects
   Version="sql11">
   <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="180,42"
+          Id="Package\Customers\Clear staging table(s)"
+          TopLeft="30,13" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Customers\Insert New Records and Stage Updates"
+          TopLeft="31,85" />
+        <EdgeLayout
+          Id="Package\Customers.PrecedenceConstraints[Constraint]"
+          TopLeft="118.25,55">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30"
+              Start="0,0"
+              End="0,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="147,42"
+          Id="Package\Customers\Apply Updates"
+          TopLeft="41,164" />
+        <EdgeLayout
+          Id="Package\Customers.PrecedenceConstraints[Constraint 1]"
+          TopLeft="115.5,127">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="256,260"
+          Size="256,303"
+          Id="Package\Customers"
+          TopLeft="85,44" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Customers\Insert New Records and Stage Updates">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="231,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM"
+          TopLeft="217,34" />
+        <NodeLayout
+          Size="146,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Populate Nulls"
+          TopLeft="262,336" />
+        <NodeLayout
+          Size="174,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Lookup new records"
+          TopLeft="252,422" />
+        <NodeLayout
+          Size="159,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Identify Changes"
+          TopLeft="704,419" />
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output]"
+          TopLeft="426,441.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="278,0"
+              Start="0,0"
+              End="270.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="270.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="87.05861328125,5,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="174,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Lookup School Type"
+          TopLeft="239,119" />
+        <NodeLayout
+          Size="136,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Lookup SBU"
+          TopLeft="258,192" />
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[OLE DB Source Output]"
+          TopLeft="329.25,76">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43"
+              Start="0,0"
+              End="0,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage"
+          TopLeft="245,260" />
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output1]"
+          TopLeft="326,161">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,31"
+              Start="0,0"
+              End="0,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,5.9453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output2]"
+          TopLeft="328,234">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,26"
+              Start="0,0"
+              End="0,18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,3.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup Match Output3]"
+          TopLeft="332.5,302">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,7.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Derived Column Output]"
+          TopLeft="337,378">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44"
+              Start="0,0"
+              End="0,36.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Insert New Records"
+          TopLeft="249,515" />
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[Lookup No Match Output]"
+          TopLeft="336.75,464">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51"
+              Start="0,0"
+              End="0,43.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.9453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup new records">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup School Type">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup SBU">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Insert New Records">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
