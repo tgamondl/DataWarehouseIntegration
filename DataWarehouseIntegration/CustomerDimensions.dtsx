@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="CustomerDimensions"
   DTS:PackageType="5"
-  DTS:VersionBuild="21"
-  DTS:VersionGUID="{D2258822-BAE5-42B9-9E01-5265B5A56949}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{7DC53298-040A-4313-821A-9F9547898869}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">6</DTS:Property>
   <DTS:Variables />
@@ -7336,7 +7336,8 @@ comp_mas_salespersondivisionno as SageSalespersonDivisionNo,
 comp_mas_salespersonno as SageSalespersonNo,
 comp_School_Type,
 comp_sbu,
-comp_SalesStage
+comp_SalesStage,
+isnull(comp_sagecustomercount,0) AS SageCustomerCountRank 
 from
 dbo.Company</property>
                     <property
@@ -7490,6 +7491,15 @@ dbo.Company</property>
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[comp_SalesStage]"
                           name="comp_SalesStage"
                           truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]"
+                          name="SageCustomerCountRank"
+                          truncationRowDisposition="FailComponent" />
                       </outputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -7549,6 +7559,10 @@ dbo.Company</property>
                           dataType="wstr"
                           length="20"
                           name="comp_SalesStage" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </output>
                     <output
@@ -7624,6 +7638,11 @@ dbo.Company</property>
                           length="20"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[comp_SalesStage]"
                           name="comp_SalesStage" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerCountRank]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[SageCustomerCountRank]"
+                          name="SageCustomerCountRank" />
                         <outputColumn
                           refId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
                           dataType="i4"
@@ -7774,6 +7793,16 @@ dbo.Company</property>
                           cachedDataType="i4"
                           cachedName="Lkup_SalesStageId"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input].Columns[Lkup_SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="Lkup_SageCustomerCountRank"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns />
                     </input>
@@ -8088,6 +8117,34 @@ dbo.Company</property>
                       <externalMetadataColumns />
                     </output>
                     <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageCustomerCountRank]"
+                      description="Output 12 of the Conditional Split Transformation"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      exclusionGroup="1"
+                      name="SageCustomerCountRank"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Inputs[Conditional Split Input]"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                          name="Expression">[REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]},0) != [REPLACENULL](#{Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerCountRank]},0)</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Specifies the friendly version of the expression. This expression version uses column names."
+                          expressionType="Notify"
+                          name="FriendlyExpression">REPLACENULL(SageCustomerCountRank,0) != REPLACENULL(Lkup_SageCustomerCountRank,0)</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                          name="EvaluationOrder">11</property>
+                      </properties>
+                      <externalMetadataColumns />
+                    </output>
+                    <output
                       refId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Conditional Split Default Output]"
                       description="Default Output of the Conditional Split Transformation"
                       exclusionGroup="1"
@@ -8274,6 +8331,12 @@ dbo.Company</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -8330,6 +8393,10 @@ dbo.Company</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Insert New Records.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -8385,6 +8452,7 @@ SageSalespersonNo,
 SchoolTypeId,
 SbuId,
 SalesStageId
+,SageCustomerCountRank
 from [Global].[Customers]</property>
                     <property
                       dataType="System.String"
@@ -8404,6 +8472,7 @@ SageSalespersonNo,
 SchoolTypeId,
 SbuId,
 SalesStageId
+,SageCustomerCountRank
 from [Global].[Customers]) [refTable]
 where [refTable].[CustomerId] = ?</property>
                     <property
@@ -8436,7 +8505,7 @@ where [refTable].[CustomerId] = ?</property>
                     <property
                       dataType="System.String"
                       description="Indicates whether to reference metadata in an XML format."
-                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryPersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryAddressId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimarySalespersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerName" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerNo" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonNo" dataType="DT_WSTR" length="4" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SchoolTypeId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SbuId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SalesStageId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                      name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryPersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimaryAddressId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PrimarySalespersonId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerName" dataType="DT_WSTR" length="60" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerNo" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonDivisionNo" dataType="DT_WSTR" length="2" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageSalespersonNo" dataType="DT_WSTR" length="4" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SchoolTypeId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SbuId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SalesStageId" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SageCustomerCountRank" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                     <property
                       containsID="true"
                       dataType="System.String"
@@ -8649,6 +8718,20 @@ where [refTable].[CustomerId] = ?</property>
                               dataType="System.String"
                               description="Specifies the column in the reference table from which a column is copied."
                               name="CopyFromReferenceColumn">SalesStageId</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerCountRank]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Copy Column"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup new records.Outputs[Lookup Match Output].Columns[Lkup_SageCustomerCountRank]"
+                          name="Lkup_SageCustomerCountRank"
+                          truncationRowDisposition="FailComponent">
+                          <properties>
+                            <property
+                              dataType="System.String"
+                              description="Specifies the column in the reference table from which a column is copied."
+                              name="CopyFromReferenceColumn">SageCustomerCountRank</property>
                           </properties>
                         </outputColumn>
                       </outputColumns>
@@ -9480,6 +9563,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -9536,6 +9625,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -9713,6 +9806,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Customer Name.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Customer Name.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Customer Name.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -9769,6 +9868,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Customer Name.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Customer Name.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -9946,6 +10049,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -10002,6 +10111,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -10179,6 +10292,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -10235,6 +10354,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -10256,6 +10379,249 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                           dataType="i4"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank"
+                  componentClassID="DTSAdapter.OLEDBDestination.3"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="Stage changes - Sage Customer Rank"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[GlobalStaging].[Customers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Connections[OleDbConnection]"
+                      connectionManagerID="{FB35A259-E41E-40C0-8F1D-821B0771D6F3}:external"
+                      connectionManagerRefId="Project.ConnectionManagers[Dimensions]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[CustomerId]"
+                          cachedDataType="i4"
+                          cachedName="CustomerId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[PrimaryPersonId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryPersonId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryPersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[PrimaryAddressId]"
+                          cachedDataType="i4"
+                          cachedName="PrimaryAddressId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryAddressId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimaryAddressId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[PrimarySalespersonId]"
+                          cachedDataType="i4"
+                          cachedName="PrimarySalespersonId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimarySalespersonId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[PrimarySalespersonId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[CustomerName]"
+                          cachedDataType="wstr"
+                          cachedLength="60"
+                          cachedName="CustomerName"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[CustomerName]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SageCustomerDivisionNo]"
+                          cachedDataType="wstr"
+                          cachedLength="2"
+                          cachedName="SageCustomerDivisionNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerDivisionNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerDivisionNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SageCustomerNo]"
+                          cachedDataType="wstr"
+                          cachedLength="20"
+                          cachedName="SageCustomerNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SageSalespersonDivisionNo]"
+                          cachedDataType="wstr"
+                          cachedLength="2"
+                          cachedName="SageSalespersonDivisionNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonDivisionNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonDivisionNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SageSalespersonNo]"
+                          cachedDataType="wstr"
+                          cachedLength="4"
+                          cachedName="SageSalespersonNo"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonNo]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageSalespersonNo]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SchoolTypeId]"
+                          cachedDataType="i4"
+                          cachedName="SchoolTypeId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SchoolTypeId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup School Type.Outputs[Lookup Match Output].Columns[SchoolTypeId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SbuId]"
+                          cachedDataType="i4"
+                          cachedName="SbuId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SbuId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup SBU.Outputs[Lookup Match Output].Columns[SbuId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SalesStageId]"
+                          cachedDataType="i4"
+                          cachedName="SalesStageId"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          dataType="i4"
+                          name="CustomerId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryPersonId]"
+                          dataType="i4"
+                          name="PrimaryPersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimaryAddressId]"
+                          dataType="i4"
+                          name="PrimaryAddressId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[PrimarySalespersonId]"
+                          dataType="i4"
+                          name="PrimarySalespersonId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[CustomerName]"
+                          dataType="wstr"
+                          length="60"
+                          name="CustomerName" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageCustomerDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerNo]"
+                          dataType="wstr"
+                          length="20"
+                          name="SageCustomerNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonDivisionNo]"
+                          dataType="wstr"
+                          length="2"
+                          name="SageSalespersonDivisionNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageSalespersonNo]"
+                          dataType="wstr"
+                          length="4"
+                          name="SageSalespersonNo" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SchoolTypeId]"
+                          dataType="i4"
+                          name="SchoolTypeId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SbuId]"
+                          dataType="i4"
+                          name="SbuId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
+                          dataType="i4"
+                          name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
                           name="ErrorColumn"
                           specialFlags="2" />
                       </outputColumns>
@@ -10412,6 +10778,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -10468,6 +10840,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -10645,6 +11021,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -10701,6 +11083,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -10878,6 +11264,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -10934,6 +11326,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -11111,6 +11507,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -11167,6 +11569,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -11344,6 +11750,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -11400,6 +11812,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -11577,6 +11993,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -11633,6 +12055,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -11810,6 +12236,12 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           cachedName="SalesStageId"
                           externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           lineageId="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage.Outputs[Lookup Match Output].Columns[SalesStageId]" />
+                        <inputColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type.Inputs[OLE DB Destination Input].Columns[SageCustomerCountRank]"
+                          cachedDataType="i4"
+                          cachedName="SageCustomerCountRank"
+                          externalMetadataColumnId="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          lineageId="Package\Customers\Insert New Records and Stage Updates\Get Customer records from CRM.Outputs[OLE DB Source Output].Columns[SageCustomerCountRank]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -11866,6 +12298,10 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                           refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type.Inputs[OLE DB Destination Input].ExternalColumns[SalesStageId]"
                           dataType="i4"
                           name="SalesStageId" />
+                        <externalMetadataColumn
+                          refId="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type.Inputs[OLE DB Destination Input].ExternalColumns[SageCustomerCountRank]"
+                          dataType="i4"
+                          name="SageCustomerCountRank" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -11947,6 +12383,11 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
                   name="Person"
                   startId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[Person]" />
                 <path
+                  refId="Package\Customers\Insert New Records and Stage Updates.Paths[SageCustomerCountRank]"
+                  endId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank.Inputs[OLE DB Destination Input]"
+                  name="SageCustomerCountRank"
+                  startId="Package\Customers\Insert New Records and Stage Updates\Identify Changes.Outputs[SageCustomerCountRank]" />
+                <path
                   refId="Package\Customers\Insert New Records and Stage Updates.Paths[SageCustomerNo]"
                   endId="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No.Inputs[OLE DB Destination Input]"
                   name="SageCustomerNo"
@@ -11990,16 +12431,32 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
             </pipeline>
           </DTS:ObjectData>
         </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Customers\Rank Duplicate customers"
+          DTS:CreationName="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2415FE01-E0D5-4784-8024-69AF23C7272A}"
+          DTS:ExecutableType="Microsoft.SqlServer.Dts.Tasks.ExecuteSQLTask.ExecuteSQLTask, Microsoft.SqlServer.SQLTask, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Rank Duplicate customers"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{4FB5D3D8-567E-4C0A-AF31-215FFA0A6519}"
+              SQLTask:SqlStatementSource="update comp&#xA;    SET&#xA;        comp.comp_sagecustomercount = ranked.CustomerRecordRank&#xA;FROM&#xA;dbo.Company as comp &#xA;INNER JOIN&#xA;(&#xA;    SELECT &#xA;        cust.Comp_CompanyId,&#xA;        cust.comp_mas_ardivisionno,&#xA;        cust.comp_mas_customerno,&#xA;        RANK() OVER (PARTITION BY cust.comp_mas_ardivisionno, cust.comp_mas_customerno ORDER BY cust.Comp_CompanyId ASC) as CustomerRecordRank&#xA;    FROM&#xA;    dbo.Company as cust&#xA;    WHERE&#xA;    cust.comp_mas_ardivisionno is not NULL&#xA;    and &#xA;    cust.comp_mas_customerno is not null &#xA;) as ranked&#xA;ON&#xA;comp.Comp_CompanyId = ranked.Comp_CompanyId" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
       </DTS:Executables>
       <DTS:PrecedenceConstraints>
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Customers.PrecedenceConstraints[Constraint]"
           DTS:CreationName=""
-          DTS:DTSID="{1D85B816-6909-4003-86B9-21E7ADDCED5A}"
+          DTS:DTSID="{7B3A0C03-26EA-45A0-BEDE-1D03D07F2CEC}"
           DTS:From="Package\Customers\Clear staging table(s)"
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint"
-          DTS:To="Package\Customers\Insert New Records and Stage Updates" />
+          DTS:To="Package\Customers\Rank Duplicate customers" />
         <DTS:PrecedenceConstraint
           DTS:refId="Package\Customers.PrecedenceConstraints[Constraint 1]"
           DTS:CreationName=""
@@ -12008,6 +12465,14 @@ where [refTable].[SageCrmCodeLookup] = ?</property>
           DTS:LogicalAnd="True"
           DTS:ObjectName="Constraint 1"
           DTS:To="Package\Customers\Apply Updates" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Customers.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{4E2BF448-CD4B-4EE3-9E08-EEA57EC74E4F}"
+          DTS:From="Package\Customers\Rank Duplicate customers"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Customers\Insert New Records and Stage Updates" />
       </DTS:PrecedenceConstraints>
     </DTS:Executable>
     <DTS:Executable
@@ -20380,7 +20845,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
         <NodeLayout
           Size="147,42"
           Id="Package\Customers\Apply Updates"
-          TopLeft="41,164" />
+          TopLeft="44,271" />
         <NodeLayout
           Size="180,42"
           Id="Package\Customers\Clear staging table(s)"
@@ -20388,21 +20853,59 @@ where [refTable].[TerritoryProfileId] = ?</property>
         <NodeLayout
           Size="171,42"
           Id="Package\Customers\Insert New Records and Stage Updates"
-          TopLeft="31,85" />
+          TopLeft="28,182" />
         <EdgeLayout
-          Id="Package\Customers.PrecedenceConstraints[Constraint]"
-          TopLeft="118.25,55">
+          Id="Package\Customers.PrecedenceConstraints[Constraint 1]"
+          TopLeft="115.5,224">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,30"
+              EndConnector="0,47"
               Start="0,0"
-              End="0,22.5">
+              End="0,39.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.5" />
+                    End="0,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="201,42"
+          Id="Package\Customers\Rank Duplicate customers"
+          TopLeft="34,94" />
+        <EdgeLayout
+          Id="Package\Customers.PrecedenceConstraints[Constraint]"
+          TopLeft="120,55">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="14.5,39"
+              Start="0,0"
+              End="14.5,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.5"
+                    Point2="0,19.5"
+                    Point3="4,19.5" />
+                  <mssgle:LineSegment
+                    End="10.5,19.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="10.5,19.5"
+                    Point2="14.5,19.5"
+                    Point3="14.5,23.5" />
+                  <mssgle:LineSegment
+                    End="14.5,31.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -20412,19 +20915,31 @@ where [refTable].[TerritoryProfileId] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\Customers.PrecedenceConstraints[Constraint 1]"
-          TopLeft="115.5,127">
+          Id="Package\Customers.PrecedenceConstraints[Constraint 2]"
+          TopLeft="134.5,136">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,37"
+              EndConnector="-21,46"
               Start="0,0"
-              End="0,29.5">
+              End="-21,38.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,29.5" />
+                    End="0,19" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19"
+                    Point2="0,23"
+                    Point3="-4,23" />
+                  <mssgle:LineSegment
+                    End="-17,23" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-17,23"
+                    Point2="-21,23"
+                    Point3="-21,27" />
+                  <mssgle:LineSegment
+                    End="-21,38.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -20436,10 +20951,10 @@ where [refTable].[TerritoryProfileId] = ?</property>
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="256,260"
-          Size="256,303"
+          PanelSize="256,368"
+          Size="256,411"
           Id="Package\Customers"
-          TopLeft="85,108" />
+          TopLeft="85,53" />
         <NodeLayout
           Size="147,42"
           Id="Package\Person\Apply Updates"
@@ -20566,106 +21081,6 @@ where [refTable].[TerritoryProfileId] = ?</property>
           Size="235,302"
           Id="Package\Salesperson"
           TopLeft="95,443" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="341,260">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="118,0"
-              Start="0,0"
-              End="110.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="110.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="715,257.75">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="122,0"
-              Start="0,0"
-              End="114.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="114.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="1072,256.5">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="125,0"
-              Start="0,0"
-              End="117.5,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="117.5,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="1314.5,409">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-1102,34"
-              Start="0,0"
-              End="-1102,26.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,13" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,13"
-                    Point2="0,17"
-                    Point3="-4,17" />
-                  <mssgle:LineSegment
-                    End="-1098,17" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-1098,17"
-                    Point2="-1102,17"
-                    Point3="-1102,21" />
-                  <mssgle:LineSegment
-                    End="-1102,26.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <NodeLayout
           Size="147,42"
           Id="Package\Territory\Apply Updates"
@@ -20792,6 +21207,106 @@ where [refTable].[TerritoryProfileId] = ?</property>
           Size="235,302"
           Id="Package\Territory Profile"
           TopLeft="847,450" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="341,259.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="118,0"
+              Start="0,0"
+              End="110.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="110.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="715,257.75">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="122,0"
+              Start="0,0"
+              End="114.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="114.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1072,256.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="125,0"
+              Start="0,0"
+              End="117.5,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="117.5,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1314.5,409">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-1102,34"
+              Start="0,0"
+              End="-1102,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13"
+                    Point2="0,17"
+                    Point3="-4,17" />
+                  <mssgle:LineSegment
+                    End="-1098,17" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-1098,17"
+                    Point2="-1102,17"
+                    Point3="-1102,21" />
+                  <mssgle:LineSegment
+                    End="-1102,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="330,594.75">
@@ -22215,217 +22730,217 @@ where [refTable].[TerritoryProfileId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[SalesStage]"
-          TopLeft="723.1,461">
+          TopLeft="753.3,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="224.9,441"
+              EndConnector="194.7,441"
               Start="0,0"
-              End="224.9,433.5">
+              End="194.7,433.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,81.4269776876269" />
+                    End="0,164.798913043478" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,81.4269776876269"
-                    Point2="0,85.4269776876269"
-                    Point3="4,85.4269776876269" />
+                    Point1="0,164.798913043478"
+                    Point2="0,168.798913043478"
+                    Point3="4,168.798913043478" />
                   <mssgle:LineSegment
-                    End="220.9,85.4269776876269" />
+                    End="190.7,168.798913043478" />
                   <mssgle:CubicBezierSegment
-                    Point1="220.9,85.4269776876269"
-                    Point2="224.9,85.4269776876269"
-                    Point3="224.9,89.4269776876269" />
+                    Point1="190.7,168.798913043478"
+                    Point2="194.7,168.798913043478"
+                    Point3="194.7,172.798913043478" />
                   <mssgle:LineSegment
-                    End="224.9,433.5" />
+                    End="194.7,433.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="87.87798828125,90.4269776876269,49.1440234375,11.6630859375"
+              BoundingBox="72.77798828125,173.798913043478,49.1440234375,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[Salesperson]"
-          TopLeft="753.3,461">
+          TopLeft="768.4,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="320.7,387"
+              EndConnector="305.6,387"
               Start="0,0"
-              End="320.7,379.5">
+              End="305.6,379.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,144.129658385093" />
+                    End="0,169.195274496178" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,144.129658385093"
-                    Point2="0,148.129658385093"
-                    Point3="4,148.129658385093" />
+                    Point1="0,169.195274496178"
+                    Point2="0,173.195274496178"
+                    Point3="4,173.195274496178" />
                   <mssgle:LineSegment
-                    End="316.7,148.129658385093" />
+                    End="301.6,173.195274496178" />
                   <mssgle:CubicBezierSegment
-                    Point1="316.7,148.129658385093"
-                    Point2="320.7,148.129658385093"
-                    Point3="320.7,152.129658385093" />
+                    Point1="301.6,173.195274496178"
+                    Point2="305.6,173.195274496178"
+                    Point3="305.6,177.195274496178" />
                   <mssgle:LineSegment
-                    End="320.7,379.5" />
+                    End="305.6,379.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="133.50740234375,153.129658385093,53.6851953125,11.609375"
+              BoundingBox="125.95740234375,178.195274496178,53.6851953125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[SageSalespersonNo]"
-          TopLeft="768.4,461">
+          TopLeft="783.5,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="325.6,334"
+              EndConnector="310.5,334"
               Start="0,0"
-              End="325.6,326.5">
+              End="310.5,326.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,145.476025017373" />
+                    End="0,163" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,145.476025017373"
-                    Point2="0,149.476025017373"
-                    Point3="4,149.476025017373" />
+                    Point1="0,163"
+                    Point2="0,167"
+                    Point3="4,167" />
                   <mssgle:LineSegment
-                    End="321.6,149.476025017373" />
+                    End="306.5,167" />
                   <mssgle:CubicBezierSegment
-                    Point1="321.6,149.476025017373"
-                    Point2="325.6,149.476025017373"
-                    Point3="325.6,153.476025017373" />
+                    Point1="306.5,167"
+                    Point2="310.5,167"
+                    Point3="310.5,171" />
                   <mssgle:LineSegment
-                    End="325.6,326.5" />
+                    End="310.5,326.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="118.9273046875,154.476025017373,87.745390625,11.6630859375"
+              BoundingBox="111.3773046875,172,87.745390625,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[SageSalesDivisionNo]"
-          TopLeft="783.5,461">
+          TopLeft="798.6,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="420,276"
+              EndConnector="404.9,276"
               Start="0,0"
-              End="420,268.5">
+              End="404.9,268.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,134" />
+                    End="0,119.519110493398" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,134"
-                    Point2="0,138"
-                    Point3="4,138" />
+                    Point1="0,119.519110493398"
+                    Point2="0,123.519110493398"
+                    Point3="4,123.519110493398" />
                   <mssgle:LineSegment
-                    End="416,138" />
+                    End="400.9,123.519110493398" />
                   <mssgle:CubicBezierSegment
-                    Point1="416,138"
-                    Point2="420,138"
-                    Point3="420,142" />
+                    Point1="400.9,123.519110493398"
+                    Point2="404.9,123.519110493398"
+                    Point3="404.9,127.519110493398" />
                   <mssgle:LineSegment
-                    End="420,268.5" />
+                    End="404.9,268.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="164.0073046875,143,91.985390625,11.6630859375"
+              BoundingBox="156.4573046875,128.519110493398,91.985390625,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[SageDivisionNo]"
-          TopLeft="798.6,461">
+          TopLeft="813.7,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="493.9,212"
+              EndConnector="478.8,212"
               Start="0,0"
-              End="493.9,204.5">
+              End="478.8,204.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,90.8769979152189" />
+                    End="0,77.1459627329192" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,90.8769979152189"
-                    Point2="0,94.8769979152189"
-                    Point3="4,94.8769979152189" />
+                    Point1="0,77.1459627329192"
+                    Point2="0,81.1459627329192"
+                    Point3="4,81.1459627329192" />
                   <mssgle:LineSegment
-                    End="489.9,94.8769979152189" />
+                    End="474.8,81.1459627329192" />
                   <mssgle:CubicBezierSegment
-                    Point1="489.9,94.8769979152189"
-                    Point2="493.9,94.8769979152189"
-                    Point3="493.9,98.8769979152189" />
+                    Point1="474.8,81.1459627329192"
+                    Point2="478.8,81.1459627329192"
+                    Point3="478.8,85.1459627329192" />
                   <mssgle:LineSegment
-                    End="493.9,204.5" />
+                    End="478.8,204.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="212.3723046875,99.8769979152189,69.155390625,11.4677734375"
+              BoundingBox="204.8223046875,86.1459627329192,69.155390625,11.4677734375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[SageCustomerNo]"
-          TopLeft="813.7,461">
+          TopLeft="828.8,461">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="589.3,133"
+              EndConnector="574.2,133"
               Start="0,0"
-              End="589.3,125.5">
+              End="574.2,125.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,46.9076086956521" />
+                    End="0,36.0052770448549" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,46.9076086956521"
-                    Point2="0,50.9076086956521"
-                    Point3="4,50.9076086956521" />
+                    Point1="0,36.0052770448549"
+                    Point2="0,40.0052770448549"
+                    Point3="4,40.0052770448549" />
                   <mssgle:LineSegment
-                    End="585.3,50.9076086956521" />
+                    End="570.2,40.0052770448549" />
                   <mssgle:CubicBezierSegment
-                    Point1="585.3,50.9076086956521"
-                    Point2="589.3,50.9076086956521"
-                    Point3="589.3,54.9076086956521" />
+                    Point1="570.2,40.0052770448549"
+                    Point2="574.2,40.0052770448549"
+                    Point3="574.2,44.0052770448549" />
                   <mssgle:LineSegment
-                    End="589.3,125.5" />
+                    End="574.2,125.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="256.0823046875,55.9076086956521,77.135390625,11.4677734375"
+              BoundingBox="248.5323046875,45.0052770448549,77.135390625,11.4677734375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -22484,9 +22999,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22628,9 +23141,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -22671,43 +23182,97 @@ where [refTable].[TerritoryProfileId] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Customers\Insert New Records and Stage Updates.Paths[Address]"
-          TopLeft="863,440">
+          TopLeft="863,431.166666666667">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="594,-12"
+              EndConnector="594,0"
               Start="0,0"
-              End="586.5,-12">
+              End="586.5,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="293,0" />
-                  <mssgle:CubicBezierSegment
-                    Point1="293,0"
-                    Point2="297,0"
-                    Point3="297,-4" />
-                  <mssgle:LineSegment
-                    End="297,-8" />
-                  <mssgle:CubicBezierSegment
-                    Point1="297,-8"
-                    Point2="297,-12"
-                    Point3="301,-12" />
-                  <mssgle:LineSegment
-                    End="586.5,-12" />
+                    End="586.5,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="278.64935546875,1,36.7012890625,9.7490234375"
+              BoundingBox="274.89935546875,5,36.7012890625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="256,42"
+          Id="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank"
+          TopLeft="521,846" />
+        <EdgeLayout
+          Id="Package\Customers\Insert New Records and Stage Updates.Paths[SageCustomerCountRank]"
+          TopLeft="721.727272727273,461">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-72.7272727272727,385"
+              Start="0,0"
+              End="-72.7272727272727,377.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.1963534361852" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,66.1963534361852"
+                    Point2="0,70.1963534361852"
+                    Point3="-4,70.1963534361852" />
+                  <mssgle:LineSegment
+                    End="-68.7272727272727,70.1963534361852" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-68.7272727272727,70.1963534361852"
+                    Point2="-72.7272727272727,70.1963534361852"
+                    Point3="-72.7272727272727,74.1963534361852" />
+                  <mssgle:LineSegment
+                    End="-72.7272727272727,377.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-93.1034215198864,75.1963534361852,113.4795703125,11.6630859375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage SalespersonNo">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Sales Division No">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup Sales stage">
     <Properties>
@@ -22732,12 +23297,38 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Division No">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer No">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Customers\Insert New Records and Stage Updates\Lookup new records">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:string">false</Value>
+          type="q2:boolean">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -22747,10 +23338,23 @@ where [refTable].[TerritoryProfileId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:string">0</Value>
+          type="q4:int">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Person">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -22804,7 +23408,46 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - School Type">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Address">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sbu">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Salesperson">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -22844,6 +23487,19 @@ where [refTable].[TerritoryProfileId] = ?</property>
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sales Stage">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -23881,7 +24537,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -23891,7 +24547,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -23899,10 +24555,15 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Salesperson\Insert New Records and Stage Updates\Get user records from CRM">
+    design-time-name="Package\Salesperson\Insert New Records and Stage Updates\Stage - Deleted">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -23920,15 +24581,10 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Salesperson\Insert New Records and Stage Updates\Stage - Deleted">
+    design-time-name="Package\Salesperson\Insert New Records and Stage Updates\Get user records from CRM">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -24119,8 +24775,57 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
+    design-time-name="Package\Territory\Insert New Records and Stage Updates\Stage - Territory Id">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\Territory\Insert New Records and Stage Updates\Get territory records from CRM">
     <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Territory\Insert New Records and Stage Updates\Add new records">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Territory\Insert New Records and Stage Updates\Lookup existing records">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
@@ -24313,38 +25018,7 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Get territory profile records from CRM">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Territory\Insert New Records and Stage Updates\Lookup existing records">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Territory\Insert New Records and Stage Updates\Add new records">
+    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Stage - Name">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -24353,42 +25027,6 @@ where [refTable].[TerritoryProfileId] = ?</property>
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Territory\Insert New Records and Stage Updates\Stage - Territory Id">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Lookup existing records">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string"></Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -24419,7 +25057,38 @@ where [refTable].[TerritoryProfileId] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Stage - Name">
+    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Get territory profile records from CRM">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Territory Profile\Insert New Records and Stage Updates\Lookup existing records">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Customers\Insert New Records and Stage Updates\Stage changes - Sage Customer Rank">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
